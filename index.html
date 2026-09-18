@@ -602,58 +602,36 @@
      =================================================================== */
   const PROJECTS = [
     {
+      title: "High-Performance API Engine",
+      tagline: "Distributed rate limiter, proven under real load.",
+      status: "live",
+      problem: "Multiple API instances enforcing one shared rate limit is a classic race-condition trap — naive counters let clients slip through under concurrency.",
+      architecture: "Fastify service backed by Redis, using an atomic Lua script for the token-bucket check-and-decrement so limit checks stay race-free across horizontally scaled instances. Ships with Prometheus metrics and graceful shutdown handling.",
+      result: "~470 req/s sustained, p95 latency under 10ms on the fast path, zero race conditions observed under 50 concurrent virtual users (k6 load test, documented in the repo).",
+      tags: ["Fastify", "Redis", "Lua", "Prometheus", "Docker", "k6"],
+      repo: "https://github.com/dipak-sumesara/high-performance-api-engine",
+      demo: null
+    },
+    {
+      title: "Event Sync Platform",
+      tagline: "Reliable webhook delivery to unreliable external systems.",
+      status: "live",
+      problem: "Integrating with external platforms (Salesforce, ERPs, payment gateways) means living with network failures, partial downtime, and duplicate deliveries — most integrations don't handle any of it correctly.",
+      architecture: "An Order Service emits domain events, an Event Processor attempts webhook delivery, failures queue in Redis, a retry worker applies exponential backoff, and repeated failures fall through to dead-letter handling. Redis also backs idempotent duplicate detection so retried events never apply twice.",
+      result: "Idempotent processing and exponential-backoff retry validated end-to-end across three services against a simulated unreliable external system.",
+      tags: ["Node.js", "NestJS", "Redis", "Event-driven", "Idempotency", "DLQ"],
+      repo: "https://github.com/dipak-sumesara/event-sync-platform",
+      demo: null
+    },
+    {
       title: "LLM Inference Orchestrator",
-      tagline: "Gateway routing LLM calls across providers with semantic caching and circuit-breaker fallback.",
+      tagline: "Production-style infrastructure for resilient LLM job processing.",
       status: "in-progress",
-      problem: "Calling multiple LLM providers directly means duplicating retry, rate-limit, and cost-control logic across every service that talks to a model.",
-      architecture: "A NestJS gateway fronts provider APIs with semantic caching to skip redundant calls, a circuit breaker to fail over between providers, and BullMQ-backed queues with a dead-letter queue for async batch inference.",
-      result: "ADD BENCHMARK NUMBER HERE",
-      tags: ["NestJS", "Redis", "BullMQ", "TypeScript"],
-      repo: "ADD REPO LINK HERE",
-      demo: null
-    },
-    {
-      title: "event-sync-platform",
-      tagline: "Distributed webhook-based event sync with idempotent handling and eventual consistency.",
-      status: "live",
-      problem: "Webhook delivery is inherently unreliable — duplicate deliveries, out-of-order events, and downstream failures all cause data to drift out of sync between systems.",
-      architecture: "Idempotency keys de-dupe inbound webhooks, failed handlers retry through a dead-letter queue, and consumers reconcile toward eventual consistency instead of assuming exactly-once delivery.",
-      result: "ADD BENCHMARK NUMBER HERE",
-      tags: ["NestJS", "Redis", "PostgreSQL"],
-      repo: "ADD REPO LINK HERE",
-      demo: "ADD LIVE DEMO LINK HERE"
-    },
-    {
-      title: "high-performance-api-engine",
-      tagline: "API layer demonstrating a seconds-to-milliseconds latency reduction under load.",
-      status: "live",
-      problem: "Slow API responses under load usually trace back to repeated expensive queries and cold caches, not the framework itself.",
-      architecture: "Redis-backed caching sits in front of optimized, indexed Postgres queries, with load tests validating the win end-to-end rather than trusting it by inspection.",
-      result: "Cut P95 latency from seconds to milliseconds under load test — ADD EXACT BENCHMARK NUMBER HERE",
-      tags: ["Node.js", "Redis", "PostgreSQL", "Load Testing"],
-      repo: "ADD REPO LINK HERE",
-      demo: "ADD LIVE DEMO LINK HERE"
-    },
-    {
-      title: "Real-time WebSocket service at scale",
-      tagline: "Live updates and presence over WebSockets, fanned out across instances via Redis pub/sub.",
-      status: "planned",
-      problem: "A single WebSocket server can't hold every connection — presence and live updates need to stay consistent once traffic is spread across multiple instances.",
-      architecture: "Redis pub/sub fans messages out across WebSocket server instances so any instance can broadcast to any connected client, regardless of which instance holds the socket.",
-      result: "ADD BENCHMARK NUMBER HERE",
-      tags: ["WebSockets", "Redis", "Node.js"],
-      repo: "ADD REPO LINK HERE",
-      demo: null
-    },
-    {
-      title: "Elasticsearch index-sync pipeline",
-      tagline: "Keeps a search index reliably in sync with a Postgres source of truth.",
-      status: "planned",
-      problem: "Search indexes drift from their source of truth the moment writes happen outside the indexing path, silently breaking search results.",
-      architecture: "A sync pipeline listens for source-of-truth changes and reindexes incrementally, treating the index as a derived, rebuildable view rather than a second source of truth.",
-      result: "ADD BENCHMARK NUMBER HERE",
-      tags: ["Elasticsearch", "PostgreSQL", "Node.js"],
-      repo: "ADD REPO LINK HERE",
+      problem: "LLM APIs are slow, flaky, and expensive to call synchronously at scale — most demos just wrap a single blocking call and stop there.",
+      architecture: "An API service accepts jobs and returns immediately, pushing work onto a Redis-backed queue. A separate worker service processes jobs with exponential-backoff retry, dead-letters after max attempts, and honors client-supplied idempotency keys so retried requests never duplicate work.",
+      result: "Async ingestion, retry/DLQ, and idempotency are implemented and running. Multi-provider routing, semantic caching, and load-test benchmarks are the next milestone — noted openly as in progress rather than claimed as done.",
+      tags: ["Node.js", "Redis", "Queue/Worker", "Idempotency"],
+      repo: "https://github.com/dipak-sumesara/llm-inference-orchestrator",
       demo: null
     }
   ];
