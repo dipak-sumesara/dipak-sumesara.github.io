@@ -23,7 +23,7 @@
 </script>
 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
@@ -41,9 +41,10 @@
           accent:       'rgb(var(--accent) / <alpha-value>)',
           accentStrong: 'rgb(var(--accent-strong) / <alpha-value>)',
           warn:         'rgb(var(--warn) / <alpha-value>)',
+          ok:           'rgb(var(--ok) / <alpha-value>)',
         },
         fontFamily: {
-          display: ['Sora', 'system-ui', 'sans-serif'],
+          display: ['"IBM Plex Sans"', 'system-ui', 'sans-serif'],
           sans: ['"IBM Plex Sans"', 'system-ui', 'sans-serif'],
           mono: ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
         },
@@ -68,10 +69,11 @@
     --surface-2: 244 239 229;
     --line: 226 217 199;
     --ink: 26 22 16;
-    --dim: 108 96 76;
+    --dim: 100 106 116;
     --accent: 176 106 12;
     --accent-strong: 138 82 8;
     --warn: 176 56 44;
+    --ok: 13 122 104;
   }
   .dark {
     --bg: 19 17 14;
@@ -79,10 +81,11 @@
     --surface-2: 36 32 25;
     --line: 58 51 39;
     --ink: 244 238 226;
-    --dim: 163 150 126;
+    --dim: 148 163 184;
     --accent: 245 166 35;
     --accent-strong: 255 199 92;
     --warn: 217 119 87;
+    --ok: 45 212 191;
   }
   body { background: rgb(var(--bg)); }
 
@@ -92,13 +95,26 @@
     [data-reveal] { opacity: 1; transform: none; transition: none; }
     html { scroll-behavior: auto; }
   }
+
+  /* Print / PDF export: the scroll-triggered reveal never fires for content
+     that hasn't been scrolled into view, so without this override most of
+     the page would print blank or half-faded. Force everything visible,
+     drop the sticky+blur header (backdrop-filter and position:sticky both
+     rasterize unpredictably across paginated output), and strip decorative
+     motion that has no business on a static page. */
+  @media print {
+    [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .site-header { position: static !important; background: rgb(var(--surface)) !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+    .hero-glow, .status-chip, #theme-toggle { display: none !important; }
+  }
 </style>
 </head>
 <body class="bg-bg text-ink font-sans antialiased selection:bg-accent/25 selection:text-ink">
 
 <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:border focus:border-line focus:bg-surface focus:px-4 focus:py-2.5 focus:font-mono focus:text-sm focus:shadow-soft">Skip to main content</a>
 
-<header class="sticky top-0 z-40 border-b border-line bg-bg/80 backdrop-blur">
+<header class="site-header sticky top-0 z-40 border-b border-line bg-bg/80 backdrop-blur">
   <div class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-6 sm:px-8">
     <a href="#top" class="flex items-center gap-2.5 font-mono text-sm font-semibold tracking-tight">
       <span class="grid h-8 w-8 place-items-center rounded-lg border border-line bg-accent/10 text-xs font-bold text-accentStrong" aria-hidden="true">DS</span>
@@ -112,7 +128,7 @@
       <a class="transition-colors hover:text-ink" href="#contact">Contact</a>
     </nav>
     <div class="flex items-center gap-2.5 sm:gap-3">
-      <span class="hidden items-center gap-2 rounded-full border border-line bg-surface px-3 py-1.5 font-mono text-[11px] uppercase tracking-wide text-dim sm:inline-flex">
+      <span class="status-chip hidden items-center gap-2 rounded-full border border-line bg-surface px-3 py-1.5 font-mono text-[11px] uppercase tracking-wide text-dim sm:inline-flex">
         <span class="relative flex h-2 w-2" aria-hidden="true">
           <span class="motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
           <span class="relative inline-flex h-2 w-2 rounded-full bg-accent"></span>
@@ -131,7 +147,7 @@
 
   <!-- ===================== HERO ===================== -->
   <section id="top" class="relative scroll-mt-24 overflow-hidden pt-14 pb-16 sm:pt-20 sm:pb-24">
-    <div class="pointer-events-none absolute -top-24 right-0 h-96 w-96 rounded-full bg-accent/20 blur-3xl" aria-hidden="true"></div>
+    <div class="hero-glow pointer-events-none absolute -top-24 right-0 h-96 w-96 rounded-full bg-accent/20 blur-3xl" aria-hidden="true"></div>
     <div class="relative mx-auto grid max-w-6xl gap-12 px-6 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
       <div class="min-w-0">
         <div class="mb-5 flex items-center gap-4" data-reveal>
@@ -165,19 +181,19 @@
             <span class="h-2.5 w-2.5 rounded-full bg-[#FF5F57]"></span>
             <span class="h-2.5 w-2.5 rounded-full bg-[#FEBC2E]"></span>
             <span class="h-2.5 w-2.5 rounded-full bg-[#28C840]"></span>
-            <span class="ml-2 font-mono text-xs text-[#8A7A5E]">zsh — status</span>
+            <span class="ml-2 font-mono text-xs text-[#7C8798]">zsh — status</span>
           </div>
           <div class="px-4 py-5 font-mono text-[13px] leading-7 text-[#F1E9D8] sm:px-5 sm:text-sm">
-            <p class="break-words"><span class="text-accent">visitor@dipak</span><span class="text-[#8A7A5E]"> ~ %</span> status</p>
-            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#8A7A5E]">role</span><span class="min-w-[10rem] flex-1 break-words">Senior Backend Engineer, Full-Stack</span></div>
-            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#8A7A5E]">location</span><span class="min-w-[10rem] flex-1 break-words">Ahmedabad, IN · Remote (EST overlap)</span></div>
-            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#8A7A5E]">stack</span><span class="min-w-[10rem] flex-1 break-words">Node.js · NestJS · React · TypeScript · AWS</span></div>
-            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#8A7A5E]">years</span><span class="min-w-[10rem] flex-1 break-words">8+ across 5 teams</span></div>
-            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#8A7A5E]">latency</span><span class="min-w-[10rem] flex-1 break-words"><span class="text-accent">seconds → milliseconds</span> (Redis + indexing, Aloha)</span></div>
-            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#8A7A5E]">scale</span><span class="min-w-[10rem] flex-1 break-words"><span class="text-accent">100K+</span> concurrent users (11Wickets)</span></div>
-            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#8A7A5E]">coverage</span><span class="min-w-[10rem] flex-1 break-words"><span class="text-accent">90%</span> min. gate enforced (Healthy 365, SG Gov)</span></div>
-            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#8A7A5E]">search</span><span class="min-w-[10rem] flex-1 break-words">~20K products indexed, Elasticsearch (Aloha)</span></div>
-            <p class="mt-3"><span class="text-accent">visitor@dipak</span><span class="text-[#8A7A5E]"> ~ %</span> <span class="motion-safe:animate-blink -mb-0.5 inline-block h-[14px] w-[7px] bg-accent" aria-hidden="true"></span></p>
+            <p class="break-words"><span class="text-accent">visitor@dipak</span><span class="text-[#7C8798]"> ~ %</span> status</p>
+            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#7C8798]">role</span><span class="min-w-[10rem] flex-1 break-words">Senior Backend Engineer, Full-Stack</span></div>
+            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#7C8798]">location</span><span class="min-w-[10rem] flex-1 break-words">Ahmedabad, IN · Remote (EST overlap)</span></div>
+            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#7C8798]">stack</span><span class="min-w-[10rem] flex-1 break-words">Node.js · NestJS · React · TypeScript · AWS</span></div>
+            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#7C8798]">years</span><span class="min-w-[10rem] flex-1 break-words">8+ across 5 teams</span></div>
+            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#7C8798]">latency</span><span class="min-w-[10rem] flex-1 break-words"><span class="text-accent">seconds → milliseconds</span> (Redis + indexing, Aloha)</span></div>
+            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#7C8798]">scale</span><span class="min-w-[10rem] flex-1 break-words"><span class="text-accent">100K+</span> concurrent users (11Wickets)</span></div>
+            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#7C8798]">coverage</span><span class="min-w-[10rem] flex-1 break-words"><span class="text-accent">90%</span> min. gate enforced (Healthy 365, SG Gov)</span></div>
+            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#7C8798]">search</span><span class="min-w-[10rem] flex-1 break-words">~20K products indexed, Elasticsearch (Aloha)</span></div>
+            <p class="mt-3"><span class="text-accent">visitor@dipak</span><span class="text-[#7C8798]"> ~ %</span> <span class="motion-safe:animate-blink -mb-0.5 inline-block h-[14px] w-[7px] bg-accent" aria-hidden="true"></span></p>
           </div>
         </div>
       </div>
@@ -463,16 +479,16 @@
             <span class="h-2.5 w-2.5 rounded-full bg-[#FF5F57]"></span>
             <span class="h-2.5 w-2.5 rounded-full bg-[#FEBC2E]"></span>
             <span class="h-2.5 w-2.5 rounded-full bg-[#28C840]"></span>
-            <span class="ml-2 font-mono text-xs text-[#8A7A5E]">zsh — contact</span>
+            <span class="ml-2 font-mono text-xs text-[#7C8798]">zsh — contact</span>
           </div>
           <div class="px-4 py-5 font-mono text-[13px] leading-7 text-[#F1E9D8] sm:px-5 sm:text-sm">
-            <p class="break-words"><span class="text-accent">visitor@dipak</span><span class="text-[#8A7A5E]"> ~ %</span> contact --dipak</p>
-            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#8A7A5E]">email</span><span class="min-w-[10rem] flex-1 break-words">dipakbsumesara@gmail.com</span></div>
-            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#8A7A5E]">phone</span><span class="min-w-[10rem] flex-1 break-words">+91 96621 84977</span></div>
-            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#8A7A5E]">github</span><span class="min-w-[10rem] flex-1 break-words">github.com/dipak-sumesara</span></div>
-            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#8A7A5E]">linkedin</span><span class="min-w-[10rem] flex-1 break-words">linkedin.com/in/dipakbsumesara</span></div>
-            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#8A7A5E]">location</span><span class="min-w-[10rem] flex-1 break-words">Ahmedabad, India — remote, open to relocation</span></div>
-            <p class="mt-3"><span class="text-accent">visitor@dipak</span><span class="text-[#8A7A5E]"> ~ %</span> <span class="motion-safe:animate-blink -mb-0.5 inline-block h-[14px] w-[7px] bg-accent" aria-hidden="true"></span></p>
+            <p class="break-words"><span class="text-accent">visitor@dipak</span><span class="text-[#7C8798]"> ~ %</span> contact --dipak</p>
+            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#7C8798]">email</span><span class="min-w-[10rem] flex-1 break-words">dipakbsumesara@gmail.com</span></div>
+            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#7C8798]">phone</span><span class="min-w-[10rem] flex-1 break-words">+91 96621 84977</span></div>
+            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#7C8798]">github</span><span class="min-w-[10rem] flex-1 break-words">github.com/dipak-sumesara</span></div>
+            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#7C8798]">linkedin</span><span class="min-w-[10rem] flex-1 break-words">linkedin.com/in/dipakbsumesara</span></div>
+            <div class="flex flex-wrap gap-x-3"><span class="w-20 flex-none text-[#7C8798]">location</span><span class="min-w-[10rem] flex-1 break-words">Ahmedabad, India — remote, open to relocation</span></div>
+            <p class="mt-3"><span class="text-accent">visitor@dipak</span><span class="text-[#7C8798]"> ~ %</span> <span class="motion-safe:animate-blink -mb-0.5 inline-block h-[14px] w-[7px] bg-accent" aria-hidden="true"></span></p>
           </div>
         </div>
 
@@ -544,7 +560,7 @@
   (function renderProjects() {
     const STATUS_LABEL = { "live": "Live", "in-progress": "In Progress", "planned": "Planned" };
     const STATUS_CLASS = {
-      "live": "border-accent/40 bg-accent/10 text-accentStrong",
+      "live": "border-ok/40 bg-ok/10 text-ok",
       "in-progress": "border-warn/40 bg-warn/10 text-warn",
       "planned": "border-line bg-surface2 text-dim",
     };
