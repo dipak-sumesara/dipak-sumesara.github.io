@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Dipak Sumesara</title>
+<meta name="description" content="Portfolio for Dipak Sumesara, a backend-heavy full-stack engineer — experience, stack, and impact metrics from 8+ years shipping production systems.">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#F5F7FA;
+    --surface:#FFFFFF;
+    --surface-2:#EDF1F6;
+    --border:#D9DFE8;
+    --text:#12151C;
+    --text-dim:#57626F;
+    --accent:#0C8479;
+    --accent-strong:#086159;
+    --accent-soft:#E1F3F0;
+    --warn:#B45309;
+    --warn-soft:#FBEEDD;
+    --shadow:0 1px 2px rgba(15,20,30,0.06),0 10px 28px -14px rgba(15,20,30,0.16);
+    --font-display:'IBM Plex Sans',system-ui,-apple-system,sans-serif;
+    --font-body:'IBM Plex Sans',system-ui,-apple-system,sans-serif;
+    --font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0A0D12;
+      --surface:#12161F;
+      --surface-2:#171C27;
+      --border:#262D3B;
+      --text:#E8ECF2;
+      --text-dim:#8B95A8;
+      --accent:#5EEAD4;
+      --accent-strong:#99F6E4;
+      --accent-soft:rgba(94,234,212,0.12);
+      --warn:#F5A623;
+      --warn-soft:rgba(245,166,35,0.12);
+      --shadow:0 1px 2px rgba(0,0,0,0.4),0 14px 32px -16px rgba(0,0,0,0.65);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0A0D12;
+    --surface:#12161F;
+    --surface-2:#171C27;
+    --border:#262D3B;
+    --text:#E8ECF2;
+    --text-dim:#8B95A8;
+    --accent:#5EEAD4;
+    --accent-strong:#99F6E4;
+    --accent-soft:rgba(94,234,212,0.12);
+    --warn:#F5A623;
+    --warn-soft:rgba(245,166,35,0.12);
+    --shadow:0 1px 2px rgba(0,0,0,0.4),0 14px 32px -16px rgba(0,0,0,0.65);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;}
+  [hidden]{display:none!important;}
+  h1,h2,h3,h4{font-family:var(--font-display);text-wrap:balance;margin:0;}
+  a{color:inherit;}
+  .wrap{max-width:1080px;margin:0 auto;padding-inline:24px;}
+  @media (max-width:640px){ .wrap{padding-inline:18px;} }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky;top:env(safe-area-inset-top,0px);z-index:40;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .topbar-inner{
+    max-width:1080px;margin:0 auto;padding:14px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  }
+  @media (max-width:640px){ .topbar-inner{padding:12px 18px;} }
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-weight:600;font-size:0.95rem;letter-spacing:0.01em;text-decoration:none;}
+  .brand-mark{
+    width:28px;height:28px;border-radius:7px;
+    background:var(--accent-soft);color:var(--accent-strong);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--font-mono);font-size:0.72rem;font-weight:700;
+    border:1px solid var(--border);
+  }
+  .status-pill{
+    display:inline-flex;align-items:center;gap:7px;
+    font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.04em;
+    color:var(--text-dim);text-transform:uppercase;
+    padding:5px 10px;border:1px solid var(--border);border-radius:999px;background:var(--surface);
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none;
+    box-shadow:0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent);
+    animation:ping 2.2s ease-out infinite;}
+  @keyframes ping{
+    0%{box-shadow:0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent);}
+    70%{box-shadow:0 0 0 7px color-mix(in srgb, var(--accent) 0%, transparent);}
+    100%{box-shadow:0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent);}
+  }
+  .nav-links{display:flex;gap:22px;font-size:0.9rem;}
+  .nav-links a{text-decoration:none;color:var(--text-dim);}
+  .nav-links a:hover{color:var(--text);}
+  @media (max-width:760px){ .nav-links{display:none;} }
+
+  /* ---------- hero ---------- */
+  .hero{padding:56px 0 44px;}
+  @media (max-width:640px){ .hero{padding:36px 0 32px;} }
+  .hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:48px;align-items:start;}
+  .hero-grid > div{min-width:0;}
+  @media (max-width:880px){ .hero-grid{grid-template-columns:1fr;gap:32px;} }
+
+  .avatar-row{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+  .avatar{
+    width:64px;height:64px;border-radius:50%;object-fit:cover;flex:none;
+    border:2px solid var(--border);box-shadow:var(--shadow);
+  }
+  .eyebrow{font-family:var(--font-mono);font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-strong);margin-bottom:0;display:block;}
+  .hero h1{font-size:clamp(2.1rem,5vw,3.3rem);font-weight:700;letter-spacing:-0.02em;line-height:1.05;margin-bottom:10px;}
+  .hero .role{font-size:clamp(1.05rem,2vw,1.25rem);color:var(--text-dim);font-weight:500;margin-bottom:20px;}
+  .hero .role strong{color:var(--text);font-weight:600;}
+  .hero p.summary{max-width:60ch;color:var(--text-dim);font-size:1rem;margin-bottom:26px;}
+  .hero-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:34px;}
+  .btn{
+    font-family:var(--font-mono);font-size:0.85rem;font-weight:500;
+    padding:11px 18px;border-radius:8px;text-decoration:none;
+    display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);
+    transition:transform .15s ease, border-color .15s ease;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--accent);border-color:var(--accent);color:var(--bg);}
+  .btn-primary:hover{border-color:var(--accent-strong);}
+  .btn-ghost{background:var(--surface);color:var(--text);}
+  .btn-ghost:hover{border-color:var(--accent);}
+
+  .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+  @media (max-width:640px){ .stat-row{grid-template-columns:repeat(2,1fr);} }
+  .stat{background:var(--surface);padding:16px 14px;}
+  .stat .num{font-family:var(--font-mono);font-weight:600;font-size:1.4rem;color:var(--accent-strong);display:block;}
+  .stat .label{font-size:0.78rem;color:var(--text-dim);margin-top:4px;display:block;}
+
+  /* ---------- terminal ---------- */
+  .terminal{
+    background:#0D1117;border-radius:12px;overflow:hidden;
+    box-shadow:var(--shadow);border:1px solid #1F2733;
+  }
+  .terminal-bar{display:flex;align-items:center;gap:7px;padding:11px 14px;background:#161C27;border-bottom:1px solid #1F2733;}
+  .terminal-bar span{width:10px;height:10px;border-radius:50%;display:inline-block;}
+  .t-dot1{background:#FF5F57;} .t-dot2{background:#FEBC2E;} .t-dot3{background:#28C840;}
+  .terminal-title{margin-left:8px;font-family:var(--font-mono);font-size:0.72rem;color:#7C8798;}
+  .terminal-body{
+    margin:0;padding:18px 18px 20px;color:#D7E1EE;font-family:var(--font-mono);
+    font-size:0.82rem;line-height:1.7;
+  }
+  .term-line{white-space:normal;word-break:break-word;}
+  .term-row{display:flex;flex-wrap:wrap;column-gap:10px;row-gap:0;margin:2px 0;}
+  .term-label{color:#7C8798;flex:0 0 76px;}
+  .term-val{color:#F3F6FA;flex:1 1 180px;min-width:0;word-break:break-word;}
+  @media (max-width:400px){ .terminal-body{font-size:0.76rem;} .term-label{flex-basis:68px;} }
+  .t-prompt{color:#5EEAD4;}
+  .t-key{color:#7C8798;}
+  .t-val{color:#F3F6FA;}
+  .t-hl{color:#F5A623;}
+  .cursor{display:inline-block;width:7px;height:14px;background:#5EEAD4;vertical-align:-2px;animation:blink 1s step-end infinite;}
+  @keyframes blink{50%{opacity:0;}}
+  @media (prefers-reduced-motion: reduce){ .cursor{animation:none;} .dot{animation:none;} }
+
+  /* ---------- section shells ---------- */
+  section{padding:60px 0;border-top:1px solid var(--border);}
+  @media (max-width:640px){ section{padding:44px 0;} }
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:32px;flex-wrap:wrap;}
+  .section-head h2{font-size:clamp(1.4rem,3vw,1.9rem);letter-spacing:-0.01em;}
+  .section-tag{font-family:var(--font-mono);font-size:0.75rem;letter-spacing:0.06em;color:var(--text-dim);text-transform:uppercase;}
+
+  /* ---------- experience ---------- */
+  .timeline{display:flex;flex-direction:column;gap:0;}
+  .job{display:grid;grid-template-columns:170px 1fr;gap:28px;padding:28px 0;border-top:1px solid var(--border);}
+  .job:first-child{border-top:none;padding-top:0;}
+  @media (max-width:700px){ .job{grid-template-columns:1fr;gap:10px;} }
+  .job-meta{display:flex;flex-direction:column;gap:8px;padding-top:3px;}
+  .job-dates{font-family:var(--font-mono);font-size:0.78rem;color:var(--text-dim);letter-spacing:0.02em;}
+  .job-uptime{
+    font-family:var(--font-mono);font-size:0.72rem;color:var(--accent-strong);
+    background:var(--accent-soft);border:1px solid var(--border);border-radius:6px;
+    padding:3px 8px;width:fit-content;
+  }
+  .job h3{font-size:1.15rem;font-weight:600;margin-bottom:3px;}
+  .job h3 .co{color:var(--accent-strong);}
+  .job h3 small{font-weight:400;color:var(--text-dim);font-size:0.85em;}
+  .job-loc{font-size:0.85rem;color:var(--text-dim);margin-bottom:16px;}
+  .subproject{margin-top:18px;}
+  .subproject:first-of-type{margin-top:0;}
+  .subproject h4{font-size:0.95rem;font-weight:600;margin-bottom:8px;color:var(--text);}
+  .subproject h4 .tag{font-family:var(--font-mono);font-weight:400;font-size:0.78em;color:var(--text-dim);}
+  .job ul{margin:0;padding-left:18px;color:var(--text-dim);font-size:0.93rem;display:flex;flex-direction:column;gap:7px;}
+  .job li::marker{color:var(--accent);}
+
+  /* ---------- stack ---------- */
+  .stack-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  @media (max-width:880px){ .stack-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:480px){ .stack-grid{grid-template-columns:1fr;} }
+  .stack-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;}
+  .stack-card h4{font-family:var(--font-mono);font-size:0.78rem;letter-spacing:0.05em;text-transform:uppercase;color:var(--accent-strong);margin-bottom:12px;}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;}
+  .chip{
+    font-family:var(--font-mono);font-size:0.76rem;color:var(--text);
+    background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:4px 8px;
+  }
+
+  /* ---------- education ---------- */
+  .edu-card{
+    display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;
+    background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;
+  }
+  .edu-card h3{font-size:1.05rem;margin-bottom:4px;}
+  .edu-card p{margin:0;color:var(--text-dim);font-size:0.9rem;}
+  .edu-year{font-family:var(--font-mono);color:var(--accent-strong);font-size:0.9rem;}
+
+  /* ---------- contact / footer ---------- */
+  .contact{text-align:left;}
+  .contact-term{
+    background:#0D1117;border:1px solid #1F2733;border-radius:12px;padding:26px 24px;color:#D7E1EE;
+    font-family:var(--font-mono);font-size:0.9rem;line-height:1.9;margin-bottom:28px;
+  }
+  .contact-term .t-prompt{color:#5EEAD4;}
+  .contact-links{display:flex;flex-wrap:wrap;gap:12px;}
+  footer{padding:26px 0 calc(26px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--border);}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+  footer p{margin:0;font-size:0.82rem;color:var(--text-dim);font-family:var(--font-mono);}
+
+  .copy-toast{
+    position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%) translateY(12px);
+    background:var(--text);color:var(--bg);font-family:var(--font-mono);font-size:0.82rem;
+    padding:10px 16px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s ease, transform .2s ease;z-index:60;
+  }
+  .copy-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark">DS</span>
+      Dipak Sumesara
+    </a>
+    <nav class="nav-links">
+      <a href="#experience">Experience</a>
+      <a href="#stack">Stack</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <span class="status-pill"><span class="dot"></span>Open to new roles</span>
+  </div>
+</div>
+
+<main id="top">
+  <section class="hero" style="border-top:none;">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="avatar-row">
+          <img class="avatar" src="assets/profile.jpg" alt="Dipak Sumesara" width="64" height="64">
+          <span class="eyebrow">Ahmedabad, India · Remote (EST overlap) · Open to relocation</span>
+        </div>
+        <h1>Dipak Sumesara</h1>
+        <p class="role">Senior Software Engineer — <strong>Full-Stack, Backend-Heavy</strong></p>
+        <p class="summary">Backend-heavy full-stack engineer with 8+ years designing and shipping scalable systems end-to-end. Three years as architect and lead on a US enterprise SaaS platform, cutting API response times from seconds to milliseconds. Built the real-time backend for a fantasy-sports app at 100K+ concurrent users, and contributed to a Singapore government health platform run under a 90% test-coverage gate.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="https://drive.google.com/uc?export=download&amp;id=14ztm4__BzgJPT7L8kiN1LbL8ELW-Jf7Z" target="_blank" rel="noopener">Download résumé ↓</a>
+          <a class="btn btn-ghost" href="mailto:dipakbsumesara@gmail.com" id="email-btn">Email me</a>
+          <a class="btn btn-ghost" href="https://github.com/dipak-sumesara" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn btn-ghost" href="https://linkedin.com/in/dipakbsumesara" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+        <div class="stat-row">
+          <div class="stat"><span class="num">8+</span><span class="label">Years shipping production systems</span></div>
+          <div class="stat"><span class="num">100K+</span><span class="label">Concurrent users served live</span></div>
+          <div class="stat"><span class="num">sec→ms</span><span class="label">API latency cut at Aloha</span></div>
+          <div class="stat"><span class="num">90%</span><span class="label">Enforced test-coverage gate</span></div>
+        </div>
+      </div>
+      <div class="terminal">
+        <div class="terminal-bar">
+          <span class="t-dot1"></span><span class="t-dot2"></span><span class="t-dot3"></span>
+          <span class="terminal-title">zsh — status</span>
+        </div>
+        <div class="terminal-body">
+          <div class="term-line"><span class="t-prompt">visitor@dipak</span><span class="t-key"> ~ %</span> status</div>
+          <div class="term-row"><span class="term-label">role</span><span class="term-val">Senior Backend Engineer, Full-Stack</span></div>
+          <div class="term-row"><span class="term-label">location</span><span class="term-val">Ahmedabad, IN · Remote (EST overlap)</span></div>
+          <div class="term-row"><span class="term-label">stack</span><span class="term-val">Node.js · NestJS · React · TypeScript · AWS</span></div>
+          <div class="term-row"><span class="term-label">years</span><span class="term-val">8+ across 5 teams</span></div>
+          <div class="term-row"><span class="term-label">latency</span><span class="term-val"><span class="t-hl">seconds → milliseconds</span> (Redis + indexing, Aloha)</span></div>
+          <div class="term-row"><span class="term-label">scale</span><span class="term-val"><span class="t-hl">100K+</span> concurrent users (11Wickets)</span></div>
+          <div class="term-row"><span class="term-label">coverage</span><span class="term-val"><span class="t-hl">90%</span> min. gate enforced (Healthy 365, SG Gov)</span></div>
+          <div class="term-row"><span class="term-label">search</span><span class="term-val">~20K products indexed, Elasticsearch (Aloha)</span></div>
+          <div class="term-line" style="margin-top:14px;"><span class="t-prompt">visitor@dipak</span><span class="t-key"> ~ %</span> <span class="cursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Experience</h2>
+        <span class="section-tag">2017 — 2026 · 5 companies</span>
+      </div>
+      <div class="timeline">
+
+        <article class="job">
+          <div class="job-meta">
+            <span class="job-dates">MAR 2023 — APR 2026</span>
+            <span class="job-uptime">37mo</span>
+          </div>
+          <div class="job-body">
+            <h3>Senior Backend Engineer / Platform Lead <span class="co">· SwagUp</span> <small>(via Extendime)</small></h3>
+            <p class="job-loc">Remote — US timezone collaboration (EST/CST)</p>
+
+            <div class="subproject">
+              <h4>Aloha <span class="tag">— Enterprise Admin &amp; Operations Platform</span></h4>
+              <ul>
+                <li>Architect and lead for a B2B enterprise operations platform (vendor, distributor, admin workflows) — owned system design, built the backend, led the team, and contributed to the React frontend alongside US product and engineering.</li>
+                <li>Cut API response times from seconds to milliseconds via Redis caching, query optimization, and database indexing.</li>
+                <li>Built backend microservices behind an API Gateway pattern with centralized authentication, authorization, and session management on AWS Lambda.</li>
+                <li>Implemented a reliable Node-to-Salesforce data sync using AWS SQS with a dead-letter queue (DLQ) for guaranteed delivery and error handling.</li>
+                <li>Designed fault-tolerant, event-driven flows with pub/sub and SQS queuing, backed by retry and observability patterns.</li>
+                <li>Built Elasticsearch-backed search for ~20K products with custom indexing pipelines, keeping the index reliably in sync with source data.</li>
+                <li>Containerized services with Docker, ran deployments through CI/CD, and served assets via S3 and CloudFront CDN.</li>
+                <li>Owned CI/CD pipelines, branching strategy, and release workflows, including off-hour production deploys under high-availability SLAs.</li>
+                <li>Established Jest test automation and code-review standards across the platform.</li>
+              </ul>
+            </div>
+
+            <div class="subproject">
+              <h4>SwagUp.com <span class="tag">— Customer-Facing Platform</span></h4>
+              <ul>
+                <li>Built REST and GraphQL APIs and the React frontend for order tracking and a multi-tier pricing engine with dynamic discount logic and real-time quote generation.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="job">
+          <div class="job-meta">
+            <span class="job-dates">JUN 2021 — MAR 2023</span>
+            <span class="job-uptime">21mo</span>
+          </div>
+          <div class="job-body">
+            <h3>Software Engineer / Backend Lead <span class="co">· CoffeeBeans Consulting</span></h3>
+            <p class="job-loc">Remote</p>
+
+            <div class="subproject">
+              <h4>Health Promotion Board (Healthy 365) <span class="tag">— Singapore Government Health Platform</span></h4>
+              <ul>
+                <li>Built backend systems (Node.js) for a high-quality-bar citizen health application (React frontend), delivered by a 10-person cross-functional team under a rigorous engineering process.</li>
+                <li>Worked within a strict quality pipeline: mandatory kickoff calls with QA and design before development, pair programming, dual QA (pixel-level design QA against Figma, then functional QA), and staged Dev → QA → UAT → Production promotion.</li>
+                <li>Met enforced quality gates: 90% minimum unit-test coverage (commits blocked below threshold), strict ESLint rules, and standardized commit conventions — build/commit failed on any violation.</li>
+              </ul>
+            </div>
+
+            <div class="subproject">
+              <h4>Salam Kisan <span class="tag">— Agritech Platform</span></h4>
+              <ul>
+                <li>Owned backend architecture on Strapi CMS; built REST APIs and automated data-sync workflows for an agri supply-chain platform, including Open edX integration for learning content.</li>
+                <li>Led a 3-engineer backend team across sprint delivery, code quality, and production support.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="job">
+          <div class="job-meta">
+            <span class="job-dates">MAY 2020 — MAY 2021</span>
+            <span class="job-uptime">12mo</span>
+          </div>
+          <div class="job-body">
+            <h3>Software Engineer <span class="co">· Yudiz Solutions</span></h3>
+            <p class="job-loc">Ahmedabad, India</p>
+
+            <div class="subproject">
+              <h4>11Wickets <span class="tag">— Fantasy Sports Platform (Dream11 competitor)</span></h4>
+              <ul>
+                <li>Built real-time backend features for a platform serving 100K+ concurrent users at peak match load: live score updates over WebSockets and Redis caching to sustain high-concurrency read traffic.</li>
+                <li>Implemented full-stack WebSocket-based live chat (frontend and backend) for real-time user engagement during matches.</li>
+                <li>Led a React UX overhaul: migrated to functional components with Hooks, added lazy loading, infinite scroll, and optimized state management.</li>
+                <li>Mentored junior developers.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="job">
+          <div class="job-meta">
+            <span class="job-dates">JAN 2019 — MAR 2020</span>
+            <span class="job-uptime">14mo</span>
+          </div>
+          <div class="job-body">
+            <h3>Software Engineer <span class="co">· Biztech Consulting &amp; Solutions</span></h3>
+            <p class="job-loc">Ahmedabad, India</p>
+            <ul>
+              <li>Proposed and led a v2.0 overhaul, migrating from legacy Angular to a modern, modular architecture with clean design patterns and secure API integrations — adopted by the founding team.</li>
+              <li>Rebuilt the product from the ground up, splitting the feature set into modules to enable a tiered pricing model (Professional, Ultimate, Custom), replacing the previous all-or-nothing model and driving significant customer growth.</li>
+              <li>Built a Fabric.js product designer with live 2D preview and Three.js 3D preview for real-time customization.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="job">
+          <div class="job-meta">
+            <span class="job-dates">DEC 2017 — SEP 2018</span>
+            <span class="job-uptime">9mo</span>
+          </div>
+          <div class="job-body">
+            <h3>Software Engineer, Intern → Full-Time <span class="co">· Angular Minds</span></h3>
+            <p class="job-loc">Pune (Baner), India</p>
+
+            <div class="subproject">
+              <h4>Numnu <span class="tag">— Food Event &amp; Fair Discovery App</span></h4>
+              <ul>
+                <li>Built a food-event and fair discovery app (Angular, Ionic) surfacing local food events and trending dishes by proximity and date range.</li>
+                <li>Delivered an interactive event-guide mode used at large events (e.g. Royal Manitoba Winter Fair) for schedules, maps, vendor discovery, guest reviews, and a photo-rich review pipeline with pricing and timelines.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Stack</h2>
+        <span class="section-tag">By layer</span>
+      </div>
+      <div class="stack-grid">
+        <div class="stack-card">
+          <h4>Backend</h4>
+          <div class="chips">
+            <span class="chip">Node.js</span><span class="chip">NestJS</span><span class="chip">TypeScript</span><span class="chip">GraphQL</span><span class="chip">REST APIs</span>
+          </div>
+        </div>
+        <div class="stack-card">
+          <h4>Frontend</h4>
+          <div class="chips">
+            <span class="chip">React (Vite)</span><span class="chip">Redux Toolkit</span><span class="chip">Context API</span><span class="chip">Hooks</span><span class="chip">Tailwind CSS</span><span class="chip">Material UI</span><span class="chip">Ant Design</span><span class="chip">Angular</span><span class="chip">Ionic</span>
+          </div>
+        </div>
+        <div class="stack-card">
+          <h4>Architecture</h4>
+          <div class="chips">
+            <span class="chip">System Design</span><span class="chip">Microservices</span><span class="chip">Event-Driven</span><span class="chip">API Gateway</span><span class="chip">Pub/Sub</span><span class="chip">SQS / DLQ</span><span class="chip">WebSockets</span><span class="chip">High-Concurrency</span><span class="chip">Fault-Tolerant Design</span>
+          </div>
+        </div>
+        <div class="stack-card">
+          <h4>Data &amp; Caching</h4>
+          <div class="chips">
+            <span class="chip">MongoDB</span><span class="chip">PostgreSQL</span><span class="chip">MySQL</span><span class="chip">Redis</span><span class="chip">Elasticsearch</span>
+          </div>
+        </div>
+        <div class="stack-card">
+          <h4>Cloud &amp; DevOps</h4>
+          <div class="chips">
+            <span class="chip">AWS Lambda</span><span class="chip">API Gateway</span><span class="chip">SQS</span><span class="chip">S3</span><span class="chip">CloudFront</span><span class="chip">Docker</span><span class="chip">CI/CD</span>
+          </div>
+        </div>
+        <div class="stack-card">
+          <h4>Security</h4>
+          <div class="chips">
+            <span class="chip">AuthN / AuthZ</span><span class="chip">Session Management</span><span class="chip">Secure API Design</span><span class="chip">Centralized Auth</span>
+          </div>
+        </div>
+        <div class="stack-card">
+          <h4>Observability &amp; Testing</h4>
+          <div class="chips">
+            <span class="chip">Logging</span><span class="chip">Monitoring</span><span class="chip">Error Handling</span><span class="chip">Perf Profiling</span><span class="chip">Jest</span><span class="chip">Coverage Gates</span>
+          </div>
+        </div>
+        <div class="stack-card">
+          <h4>AI Dev Tools</h4>
+          <div class="chips">
+            <span class="chip">GitHub Copilot</span><span class="chip">Cursor</span><span class="chip">Claude Code</span><span class="chip">OpenAI Codex</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Education</h2>
+      </div>
+      <div class="edu-card">
+        <div>
+          <h3>Master of Computer Applications (MCA)</h3>
+          <p>Pune University</p>
+        </div>
+        <span class="edu-year">2018</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Contact</h2>
+        <span class="section-tag">Response time: within a day</span>
+      </div>
+      <div class="contact-term">
+<span class="t-prompt">$</span> contact --dipak<br>
+  email     dipakbsumesara@gmail.com<br>
+  phone     +91 96621 84977<br>
+  github    github.com/dipak-sumesara<br>
+  linkedin  linkedin.com/in/dipakbsumesara<br>
+  location  Ahmedabad, India — remote, open to relocation
+      </div>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="https://drive.google.com/uc?export=download&amp;id=14ztm4__BzgJPT7L8kiN1LbL8ELW-Jf7Z" target="_blank" rel="noopener">Download résumé ↓</a>
+        <a class="btn btn-ghost" href="mailto:dipakbsumesara@gmail.com">Email me</a>
+        <a class="btn btn-ghost" href="tel:+919662184977">Call</a>
+        <a class="btn btn-ghost" href="https://linkedin.com/in/dipakbsumesara" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn-ghost" href="https://github.com/dipak-sumesara" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Dipak Sumesara</p>
+    <p>Built with Node.js habits, shipped as a static page</p>
+  </div>
+</footer>
+
+<div class="copy-toast" id="toast">Email copied</div>
+
+<script>
+  (function(){
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(e){
+        var id = a.getAttribute('href').slice(1);
+        var el = document.getElementById(id);
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+      });
+    });
+  })();
+</script>
+</body>
+</html>
