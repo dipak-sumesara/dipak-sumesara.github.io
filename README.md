@@ -24,7 +24,7 @@ Then visit `http://localhost:8000`.
 
 Static host of your choice — GitHub Pages, Vercel, Netlify all work as-is, no build step.
 
-**GitHub Pages:** repo Settings → Pages → source branch `main`, folder `/ (root)`. Live at `https://<username>.github.io/<repo-name>/`.
+**GitHub Pages:** repo Settings → Pages → source branch `main`, folder `/ (root)`. This repo is named `dipak-sumesara.github.io`, so GitHub serves it at the root user-page URL: `https://dipak-sumesara.github.io/` (no path suffix).
 
 **Vercel:** import the repo, framework preset "Other," no build command, output directory `/`.
 
