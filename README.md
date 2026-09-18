@@ -1,12 +1,13 @@
 # Dipak Sumesara — Portfolio
 
-A single-page portfolio site summarizing 8+ years of backend-heavy full-stack engineering experience: impact metrics, a full work history, and a stack breakdown by layer.
+A single self-contained static HTML page (inline CSS/JS, no build step, no framework) summarizing 8+ years of backend-heavy full-stack engineering: projects, experience, stack, and contact info.
 
 ## Structure
 
 ```
-index.html        the entire site (HTML/CSS/JS, no build step)
-assets/profile.jpg  profile photo used in the hero section
+index.html    the entire site (HTML/CSS/JS inline, no dependencies beyond Google Fonts)
+resume.pdf    downloadable résumé, linked from the "Download résumé" buttons
+avatar.jpg    compressed profile photo (256×256) used in the hero
 ```
 
 ## Running locally
@@ -19,12 +20,17 @@ python3 -m http.server 8000
 
 Then visit `http://localhost:8000`.
 
-## Deploying with GitHub Pages
+## Deploying
 
-1. Push this repo to GitHub.
-2. In the repo settings, go to **Pages** → set the source branch to `main` and the folder to `/ (root)`.
-3. The site will be live at `https://<username>.github.io/<repo-name>/`.
+Static host of your choice — GitHub Pages, Vercel, Netlify all work as-is, no build step.
+
+**GitHub Pages:** repo Settings → Pages → source branch `main`, folder `/ (root)`. Live at `https://<username>.github.io/<repo-name>/`.
+
+**Vercel:** import the repo, framework preset "Other," no build command, output directory `/`.
 
 ## Updating content
 
-All copy lives directly in `index.html` — experience entries, stack chips, and contact links are plain HTML, no CMS or data file involved.
+- **Projects** — edit the `PROJECTS` array near the top of the `<script>` block at the bottom of `index.html`. Each entry renders as a card automatically; no markup to touch. Any field value starting with `"ADD "` renders as a pending placeholder pill instead of a broken link or an invented number — replace those as real repos/benchmarks land.
+- **Experience, stack, education, contact** — plain HTML further up the same file, grouped by section.
+- **Résumé** — replace `resume.pdf` with an updated export (keep the filename, or update the two `href="./resume.pdf"` references if you rename it).
+- **Avatar** — replace `avatar.jpg`; keep it roughly square and under ~300px on a side since it only ever displays at 64px.
