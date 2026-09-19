@@ -108,9 +108,21 @@
           Selected work
         </span>
       </div>
-      <div class="grid grid-cols-1 min-[700px]:grid-cols-2 gap-6" id="project-grid-featured"></div>
-      <h3 class="js-reveal mb-4 mt-10 font-mono text-xs uppercase tracking-[0.06em] text-[var(--text-dim)]">More projects</h3>
-      <div class="grid grid-cols-1 min-[560px]:grid-cols-2 min-[900px]:grid-cols-3 gap-4" id="project-grid-more"></div>
+      <div class="js-reveal mb-8 flex flex-wrap gap-2" role="group" aria-label="Filter projects" id="project-filter">
+        <button type="button" class="filter-btn" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" class="filter-btn" data-filter="professional" aria-pressed="false">Professional</button>
+        <button type="button" class="filter-btn" data-filter="open-source" aria-pressed="false">Open Source</button>
+      </div>
+
+      <div data-group="professional">
+        <h3 class="js-reveal mb-4 font-mono text-xs uppercase tracking-[0.06em] text-[var(--text-dim)]">Professional Work</h3>
+        <div class="grid grid-cols-1 min-[700px]:grid-cols-2 gap-6" id="project-grid-professional"></div>
+      </div>
+
+      <div data-group="open-source" class="mt-10">
+        <h3 class="js-reveal mb-4 font-mono text-xs uppercase tracking-[0.06em] text-[var(--text-dim)]">Open Source &amp; Personal Projects</h3>
+        <div class="grid grid-cols-1 min-[700px]:grid-cols-2 gap-6" id="project-grid-open-source"></div>
+      </div>
     </div>
   </section>
 
@@ -367,148 +379,268 @@
 <script>
   /* ===================================================================
      EDIT PROJECTS HERE — add, remove, or fill in placeholder fields.
-     featured: true renders a large card in the top grid; false renders a
-     compact card in the "More projects" grid below it.
-     repo / demo: full URL, or a placeholder string starting with "ADD "
-                  (placeholders render as a pending pill instead of a link).
-     demo is left null unless a live, working deploy exists.
+
+     Shape:
+       { id, type: 'professional' | 'open-source', title, company?, role?,
+         period?, tagline, description, stack: string[], highlights?,
+         repo?, demo?, featured? }
+
+     - type 'professional': proprietary company work. No repo/demo link is
+       rendered even if present in the data — a "Private / proprietary"
+       indicator shows instead. company + period render as a meta line.
+     - type 'open-source': repo is required for a working GitHub link.
+       repo/demo may be a placeholder string starting with "ADD " to render
+       a pending pill instead of a link; demo is left null unless a live,
+       working deploy exists.
+     - featured is reserved for future curation; not currently used by the
+       renderer (all cards render at the same size).
+     - stack is capped at 6 tags per card at render time.
      =================================================================== */
   const PROJECTS = [
+    // ---- Professional Work (from resume.pdf, most recent first) ----
     {
+      id: "aloha",
+      type: "professional",
+      title: "Aloha — Enterprise Admin & Operations Platform",
+      company: "SwagUp (via Extendime)",
+      role: "Senior Backend Engineer / Platform Lead",
+      period: "Mar 2023 – Apr 2026",
+      tagline: "Architected and led the backend for a B2B enterprise operations platform spanning vendor, distributor, and admin workflows.",
+      description: "As architect and platform lead, owned system design and the backend build, led the engineering team, and contributed to the React frontend alongside SwagUp's US product and engineering teams. Backend microservices sit behind an API Gateway pattern with centralized auth and session management on AWS Lambda, and a Node-to-Salesforce sync runs on AWS SQS with a dead-letter queue for guaranteed delivery.",
+      stack: ["Node.js", "TypeScript", "React", "AWS Lambda", "Redis", "Elasticsearch"],
+      highlights: [
+        "Cut API response times from seconds to milliseconds via Redis caching, query optimization, and indexing",
+        "Elasticsearch-backed search across ~20K products with custom indexing pipelines kept in sync with source data",
+        "Reliable Node-to-Salesforce sync on AWS SQS with a dead-letter queue for guaranteed delivery",
+        "Owns CI/CD, branching strategy, and release workflows, including off-hour production deploys under high-availability SLAs"
+      ]
+    },
+    {
+      id: "swagup-com",
+      type: "professional",
+      title: "SwagUp.com — Customer-Facing Platform",
+      company: "SwagUp (via Extendime)",
+      role: "Senior Backend Engineer / Platform Lead",
+      period: "Mar 2023 – Apr 2026",
+      tagline: "Customer-facing order tracking and pricing experience alongside the Aloha backend work.",
+      description: "Built REST and GraphQL APIs plus the React frontend for order tracking and a multi-tier pricing engine, with dynamic discount logic and real-time quote generation.",
+      stack: ["Node.js", "GraphQL", "REST APIs", "React", "TypeScript"],
+      highlights: [
+        "Multi-tier pricing engine with dynamic discount logic and real-time quote generation"
+      ]
+    },
+    {
+      id: "healthy-365",
+      type: "professional",
+      title: "Health Promotion Board (Healthy 365) — Singapore Government Health Platform",
+      company: "CoffeeBeans Consulting",
+      role: "Software Engineer / Backend Lead",
+      period: "Jun 2021 – Mar 2023",
+      tagline: "Backend for a citizen health app built under Singapore government engineering standards.",
+      description: "Built Node.js backend systems for a high-quality-bar citizen health application with a React frontend, delivered by a 10-person cross-functional team under a rigorous engineering process — mandatory QA/design kickoff calls, pair programming, dual QA against Figma, then functional QA, and staged Dev → QA → UAT → Production promotion.",
+      stack: ["Node.js", "React", "Jest", "ESLint"],
+      highlights: [
+        "90% minimum unit-test coverage enforced — commits blocked below threshold",
+        "Strict ESLint rules and standardized commit conventions enforced at build/commit time",
+        "Dual QA pipeline: pixel-level design QA against Figma, then functional QA"
+      ]
+    },
+    {
+      id: "salam-kisan",
+      type: "professional",
+      title: "Salam Kisan — Agritech Platform",
+      company: "CoffeeBeans Consulting",
+      role: "Software Engineer / Backend Lead",
+      period: "Jun 2021 – Mar 2023",
+      tagline: "Backend architecture and team lead for an agri supply-chain platform.",
+      description: "Owned backend architecture on Strapi CMS, building REST APIs and automated data-sync workflows for an agri-supply-chain platform, including Open edX integration for learning content, while leading a 3-engineer backend team across sprint delivery, code quality, and production support.",
+      stack: ["Strapi CMS", "REST APIs", "Open edX"],
+      highlights: [
+        "Automated data-sync workflows across the agri supply chain",
+        "Open edX integration for learning content",
+        "Led a 3-engineer backend team across sprint delivery and production support"
+      ]
+    },
+    {
+      id: "11wickets",
+      type: "professional",
+      title: "11Wickets — Fantasy Sports Platform (Dream11 competitor)",
+      company: "Yudiz Solutions",
+      role: "Software Engineer",
+      period: "May 2020 – May 2021",
+      tagline: "Real-time backend for a fantasy-sports platform serving 100K+ concurrent users at peak.",
+      description: "Built real-time backend features — live score updates over WebSockets and Redis caching — to sustain high-concurrency read traffic at peak match load, plus a full-stack WebSocket-based live chat for real-time engagement during matches. Also led a React UX overhaul, migrating to functional components with Hooks and adding lazy loading and infinite scroll.",
+      stack: ["Node.js", "WebSockets", "Redis", "React", "Hooks"],
+      highlights: [
+        "100K+ concurrent users supported at peak match load",
+        "Full-stack WebSocket-based live chat for real-time engagement",
+        "React UX overhaul to functional components with Hooks, lazy loading, and infinite scroll",
+        "Mentored junior developers"
+      ]
+    },
+    {
+      id: "biztech-platform-overhaul",
+      type: "professional",
+      title: "Product Platform Overhaul",
+      company: "Biztech Consulting & Solutions",
+      role: "Software Engineer",
+      period: "Jan 2019 – Mar 2020",
+      tagline: "Led a v2.0 product overhaul, from legacy Angular to a modular architecture with a new tiered pricing model.",
+      description: "Proposed and led a v2.0 overhaul, migrating from legacy Angular to a modern, modular architecture with clean design patterns and secure API integrations — adopted by the founding team. Rebuilt the product from the ground up, splitting the feature set into modules to enable a tiered pricing model (Professional, Ultimate, and Custom — pick-your-own feature set), replacing the previous all-or-nothing model. Also built a Fabric.js product designer with a live 2D preview and a Three.js 3D preview for real-time customization.",
+      stack: ["Angular", "Fabric.js", "Three.js"],
+      highlights: [
+        "v2.0 architecture overhaul adopted by the founding team",
+        "Tiered pricing model (Professional, Ultimate, Custom) replaced the previous all-or-nothing model",
+        "Fabric.js 2D + Three.js 3D live product customization preview"
+      ]
+    },
+    {
+      id: "numnu",
+      type: "professional",
+      title: "Numnu — Food Event & Fair Discovery App",
+      company: "Angular Minds",
+      role: "Software Engineer (Intern → Full-Time)",
+      period: "Dec 2017 – Sep 2018",
+      tagline: "Food-event and fair discovery app surfacing local events and trending dishes by proximity and date.",
+      description: "Built a food-event and fair discovery app in Angular and Ionic that surfaces local food events and trending dishes by proximity and date range, plus an interactive event-guide mode used at large public events (e.g. Royal Manitoba Winter Fair) for schedules, maps, vendor discovery, and guest reviews, with a photo-rich review pipeline covering pricing and timelines.",
+      stack: ["Angular", "Ionic"],
+      highlights: [
+        "Interactive event-guide mode used at large public events (e.g. Royal Manitoba Winter Fair)",
+        "Photo-rich review pipeline with pricing and timelines"
+      ]
+    },
+
+    // ---- Open Source & Personal Projects ----
+    {
+      id: "ai-integration-discovery-agent",
+      type: "open-source",
       title: "AI Integration Discovery Agent",
       tagline: "An autonomous agent that reads API docs, probes a live API, and emits a validated connector spec.",
       description: "A backend agent that automates the discovery phase of integrating a third-party SaaS API. It decides for itself what documentation to read and which endpoints to probe, reconciles the docs against real API behavior (the sample docs are deliberately wrong in places), and finalizes by calling a submit tool whose payload is validated against a Zod schema — so the output is machine-consumable by construction, not by hoping the model formats JSON correctly. Built on a small provider interface, so the same loop runs against local Ollama models or Anthropic Claude via a one-line env change. Tool surface is deliberately narrow: GET-only, localhost-only HTTP and a path-traversal-safe file reader. Hard iteration cap, retry-on-schema-failure, and unit tests that drive the loop with a mocked provider.",
-      tags: ["TypeScript", "Node.js", "LLM Tool Calling", "Zod", "Ollama", "Anthropic API"],
+      stack: ["TypeScript", "Node.js", "LLM Tool Calling", "Zod", "Ollama", "Anthropic API"],
       highlights: [
         "Multi-step agent loop — the model chooses tools and order; Node only executes",
         "Provider-agnostic: swap Ollama ↔ Claude with one env var, zero code change",
         "Structured output enforced via tool call + Zod validation with self-correction",
         "SSRF-safe and path-traversal-safe tool boundaries"
       ],
-      featured: true,
       repo: "https://github.com/dipak-sumesara/ai-integration-discovery-agent",
       demo: null
     },
     {
+      id: "ai-commerce-assistant",
+      type: "open-source",
       title: "AI Commerce Assistant",
       tagline: "RAG-backed commerce assistant where the LLM interprets and the backend decides.",
       description: "A full-stack GenAI assistant for a B2B merchandise platform, built on the principle that the LLM handles language understanding while TypeScript handles business execution. Markdown knowledge docs are chunked, embedded through Ollama, and retrieved by in-memory cosine similarity; natural-language product searches are converted into a Zod-validated intent object, after which deterministic code applies hard filters and soft preference ranking. Out-of-domain requests are refused before retrieval or generation runs, and retrieved documents are treated as untrusted data that cannot override the system prompt. React UI surfaces both the AI's interpretation and the results.",
-      tags: ["TypeScript", "Fastify", "React", "RAG", "Ollama", "Zod"],
+      stack: ["TypeScript", "Fastify", "React", "RAG", "Ollama", "Zod"],
       highlights: [
         "LLM never queries the database, filters products, or executes code",
         "Domain guardrail short-circuits out-of-scope input before RAG",
         "Prompt-injection-aware: retrieved context is untrusted by design",
         "Tests mock the Ollama layer — suite runs with no model required"
       ],
-      featured: true,
       repo: "https://github.com/dipak-sumesara/ai-commerce-assistant",
       demo: null
     },
     {
+      id: "llm-inference-orchestrator",
+      type: "open-source",
       title: "LLM Inference Orchestrator",
       tagline: "Async job infrastructure for LLM calls — queue, retries, dead-letters, idempotency.",
       description: "Production-style backend modeling how LLM inference should be run at scale: a stateless API service accepts jobs and returns immediately, a separate worker process consumes them from a Redis-backed queue, failures retry with exponential backoff, and jobs that exhaust their budget are dead-lettered rather than looping forever. Clients can pass an idempotency key so a timeout-and-retry never creates duplicate work. Deliberate failure simulation exercises the resilience paths.",
-      tags: ["TypeScript", "Node.js", "Redis", "Distributed Queues", "Idempotency", "Workers"],
+      stack: ["TypeScript", "Node.js", "Redis", "Distributed Queues", "Idempotency", "Workers"],
       highlights: [
         "API and worker run as separate processes — workers scale horizontally",
         "Exponential backoff with an enforced max-retry threshold and dead-letter state",
         "x-idempotency-key returns the original job instead of duplicating it",
         "Atomic job state transitions in Redis"
       ],
-      featured: true,
       repo: "https://github.com/dipak-sumesara/llm-inference-orchestrator",
       demo: null
     },
     {
+      id: "high-performance-api-engine",
+      type: "open-source",
       title: "High Performance API Engine",
       tagline: "Distributed token-bucket rate limiting with atomic Redis Lua, instrumented and load-tested.",
       description: "A stateless Fastify service that enforces per-client rate limits across horizontally scaled instances by keeping bucket state in Redis and doing the check-and-decrement inside a single atomic Lua script, which removes the read-modify-write race that naive rate limiters have under concurrency. Prometheus metrics expose request counts, rate-limited counts, and a latency histogram; SIGTERM/SIGINT are handled for graceful shutdown; the whole thing runs under Docker Compose and is load-tested with k6.",
-      tags: ["TypeScript", "Fastify", "Redis", "Lua", "Prometheus", "k6"],
+      stack: ["TypeScript", "Fastify", "Redis", "Lua", "Prometheus", "k6"],
       highlights: [
         "Atomic Lua execution — no race conditions observed under concurrent load",
         "Local k6 benchmark: ~470 req/s at 50 VUs, p95 under 10ms on the fast path",
         "Prometheus latency histogram and rate-limit counters, Grafana-ready",
         "Stateless: shared Redis state lets instances enforce limits consistently"
       ],
-      featured: true,
       repo: "https://github.com/dipak-sumesara/high-performance-api-engine",
       demo: null
     },
     {
+      id: "event-sync-platform",
+      type: "open-source",
       title: "Event Sync Platform",
       tagline: "Webhook-driven event sync that stays correct when the other system goes down.",
       description: "A multi-service platform simulating the failure modes of integrating with external platforms — network failures, partial downtime, duplicate deliveries. An order service emits domain events, an event processor attempts webhook delivery against a deliberately unreliable mock system, and failures enter a Redis retry queue with exponential backoff and a dead-letter threshold. Redis-backed duplicate detection makes event handling idempotent, so at-least-once delivery doesn't produce duplicate side effects.",
-      tags: ["TypeScript", "Node.js", "Redis", "Webhooks", "Event-Driven", "Microservices"],
+      stack: ["TypeScript", "Node.js", "Redis", "Webhooks", "Event-Driven", "Microservices"],
       highlights: [
         "Idempotent processing with Redis-based duplicate detection",
         "Exponential backoff (2^n) plus dead-letter threshold",
         "Multi-service layout: order service, event processor, mock external system",
         "Models eventual consistency between systems, not just API wiring"
       ],
-      featured: false,
       repo: "https://github.com/dipak-sumesara/event-sync-platform",
       demo: null
     },
     {
+      id: "nlq-commerce-engine",
+      type: "open-source",
       title: "NLQ Commerce Engine",
       tagline: "Natural-language product search with explainable, deterministic ranking.",
       description: "A Fastify API that turns conversational shopping intent (\"budget 50000, gaming laptop from Asus\") into a strict JSON filter schema via OpenAI, validates and sanitizes it with Zod, then filters and ranks entirely in deterministic TypeScript. Every result carries a ranking breakdown — keyword match count, normalized rating score, budget-proximity score, and the weighted total — so a result can always be explained rather than attributed to a model. Structured JSON logging, request timing hooks, a rule-based parser mode that runs with no API key, Docker Compose, and unit plus integration tests.",
-      tags: ["TypeScript", "Fastify", "OpenAI", "Zod", "Docker", "Vitest"],
+      stack: ["TypeScript", "Fastify", "OpenAI", "Zod", "Docker", "Vitest"],
       highlights: [
         "Strict JSON schema + Zod validation with budget/brand normalization and repair",
         "Explainable ranking: every score component returned with the result",
         "rule-based parser mode runs the full pipeline with zero API cost",
         "Integration test for /search, unit test for the filtering engine"
       ],
-      featured: false,
       repo: "https://github.com/dipak-sumesara/NLQ-Commerce-Engine",
       demo: null
     },
     {
+      id: "ai-chatbot",
+      type: "open-source",
       title: "AI Character Chat",
       tagline: "Persona-driven conversational app running entirely on a local model.",
       description: "A full-stack character chat application with a persona engine that composes a character's personality, background, speech style, and emotional boundaries into a tightly constrained prompt, then runs it against a locally hosted Ollama model with tuned sampling parameters — no cloud API and no data leaving the machine. Conversations and messages persist in MongoDB with a sliding recent-context window; the React 19 client handles state with Zustand and animation with Framer Motion.",
-      tags: ["React 19", "TypeScript", "Express", "MongoDB", "Zustand", "Ollama"],
+      stack: ["React 19", "TypeScript", "Express", "MongoDB", "Zustand", "Ollama"],
       highlights: [
         "Modular backend: character, conversation, message, and AI modules",
         "Sliding context window keeps prompts bounded as conversations grow",
         "Runs fully offline against a local model"
       ],
-      featured: false,
       repo: "https://github.com/dipak-sumesara/AI-Chatbot",
-      demo: null
-    },
-    {
-      title: "Shah Arts Studio",
-      tagline: "Marketing site for an arts studio, built on the current Next.js stack.",
-      description: "A client-facing studio site built with Next.js App Router, React 19, Tailwind 4, and a shadcn/Base UI component layer, with Vercel Analytics wired in.",
-      tags: ["Next.js", "React 19", "TypeScript", "Tailwind CSS", "shadcn/ui"],
-      category: "Client work",
-      featured: false,
-      repo: "https://github.com/dipak-sumesara/shah-arts-studio",
-      demo: null
-    },
-    {
-      title: "Little Forever Studio",
-      tagline: "Animated single-page studio site.",
-      description: "A lightweight React and Vite single-page site with Framer Motion animation and a Tailwind design system, kept fully type-checked in the build step.",
-      tags: ["React", "TypeScript", "Vite", "Tailwind CSS", "Framer Motion"],
-      category: "Client work",
-      featured: false,
-      repo: "https://github.com/dipak-sumesara/little-forever-studio",
       demo: null
     }
   ];
 
   (function renderProjects(){
     const isPlaceholder = v => typeof v === "string" && v.trim().toUpperCase().startsWith("ADD ");
-    const featuredGrid = document.getElementById("project-grid-featured");
-    const moreGrid = document.getElementById("project-grid-more");
-    const featuredFrag = document.createDocumentFragment();
-    const moreFrag = document.createDocumentFragment();
+    const grids = {
+      "professional": document.getElementById("project-grid-professional"),
+      "open-source": document.getElementById("project-grid-open-source")
+    };
+    const frags = {
+      "professional": document.createDocumentFragment(),
+      "open-source": document.createDocumentFragment()
+    };
 
     const renderLinks = (card, p) => {
       const linksEl = card.querySelector(".project-links");
+      if (p.type === "professional") {
+        linksEl.insertAdjacentHTML("beforeend", `<span class="status-pill">Private / proprietary — company work</span>`);
+        return;
+      }
       if (p.repo) {
         if (isPlaceholder(p.repo)) {
           linksEl.insertAdjacentHTML("beforeend", `<span class="chip chip-todo">${p.repo}</span>`);
@@ -525,50 +657,65 @@
       }
     };
 
-    PROJECTS.forEach((p, i) => {
-      const chips = p.tags.slice(0, 6).map(t => `<span class="chip">${t}</span>`).join("");
+    PROJECTS.forEach((p) => {
+      const isPro = p.type === "professional";
+      const chips = p.stack.slice(0, 6).map(t => `<span class="chip">${t}</span>`).join("");
       const highlightsHtml = p.highlights
         ? `<ul class="project-highlights">${p.highlights.map(h => `<li>${h}</li>`).join("")}</ul>`
         : "";
-      const categoryHtml = p.category ? `<span class="status-tag status-client">${p.category}</span>` : "";
+      const typeBadge = isPro
+        ? `<span class="status-tag status-featured">Professional</span>`
+        : `<span class="status-tag status-client">Open Source</span>`;
+      const metaLine = (p.company || p.period)
+        ? `<p class="m-0 font-mono text-[0.76rem] text-[var(--text-dim)]">${[p.company, p.period].filter(Boolean).join(" · ")}</p>`
+        : "";
 
       const card = document.createElement("article");
-
-      if (p.featured) {
-        card.className = "project-card";
-        card.innerHTML = `
-          <div class="flex items-start justify-between gap-3">
-            <h3 class="text-[1.08rem] leading-[1.3]">${p.title}</h3>
-            <span class="status-tag status-featured">Featured</span>
-          </div>
-          <p class="m-0 text-[0.92rem] text-[var(--text-dim)]">${p.tagline}</p>
-          <p class="m-0 text-[0.88rem] leading-[1.5] text-[var(--text)]">${p.description}</p>
-          ${highlightsHtml}
-          <div class="flex flex-wrap gap-1.5">${chips}</div>
-          <div class="project-links mt-auto flex flex-wrap gap-2 pt-1"></div>
-        `;
-        renderLinks(card, p);
-        featuredFrag.appendChild(card);
-      } else {
-        card.className = "project-card project-card-compact";
-        card.innerHTML = `
-          <div class="flex items-start justify-between gap-3">
-            <h3 class="text-[1.08rem] leading-[1.3]">${p.title}</h3>
-            ${categoryHtml}
-          </div>
-          <p class="m-0 text-[0.92rem] text-[var(--text-dim)]">${p.tagline}</p>
-          <p class="m-0 text-[0.85rem] leading-[1.5] text-[var(--text-dim)]">${p.description}</p>
-          ${highlightsHtml}
-          <div class="flex flex-wrap gap-1.5">${chips}</div>
-          <div class="project-links mt-auto flex flex-wrap gap-2 pt-1"></div>
-        `;
-        renderLinks(card, p);
-        moreFrag.appendChild(card);
-      }
+      card.className = "project-card";
+      card.dataset.id = p.id;
+      card.dataset.type = p.type;
+      card.innerHTML = `
+        <div class="flex items-start justify-between gap-3">
+          <h3 class="text-[1.08rem] leading-[1.3]">${p.title}</h3>
+          ${typeBadge}
+        </div>
+        ${metaLine}
+        <p class="m-0 text-[0.92rem] text-[var(--text-dim)]">${p.tagline}</p>
+        <p class="m-0 text-[0.88rem] leading-[1.5] text-[var(--text)]">${p.description}</p>
+        ${highlightsHtml}
+        <div class="flex flex-wrap gap-1.5">${chips}</div>
+        <div class="project-links mt-auto flex flex-wrap items-center gap-2 pt-1"></div>
+      `;
+      renderLinks(card, p);
+      frags[p.type].appendChild(card);
     });
 
-    featuredGrid.appendChild(featuredFrag);
-    moreGrid.appendChild(moreFrag);
+    grids["professional"].appendChild(frags["professional"]);
+    grids["open-source"].appendChild(frags["open-source"]);
+  })();
+
+  (function projectFilter(){
+    const group = document.getElementById("project-filter");
+    if (!group) return;
+    const buttons = Array.from(group.querySelectorAll(".filter-btn"));
+    const sections = {
+      "professional": document.querySelector('[data-group="professional"]'),
+      "open-source": document.querySelector('[data-group="open-source"]')
+    };
+
+    const applyFilter = (filter) => {
+      Object.entries(sections).forEach(([key, el]) => {
+        if (!el) return;
+        el.hidden = !(filter === "all" || filter === key);
+      });
+    };
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        buttons.forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+        applyFilter(btn.dataset.filter);
+      });
+    });
   })();
 
   (function smoothScrollNav(){
