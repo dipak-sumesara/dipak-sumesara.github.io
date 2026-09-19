@@ -1,0 +1,14 @@
+{
+  "name": "portfolio-website",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Dipak Sumesara's portfolio site, styled with Tailwind CSS.",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/input.css -o ./dist/styles.css --minify",
+    "watch:css": "tailwindcss -i ./src/input.css -o ./dist/styles.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  }
+}
