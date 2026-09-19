@@ -633,6 +633,17 @@
       tags: ["Node.js", "Redis", "Queue/Worker", "Idempotency"],
       repo: "https://github.com/dipak-sumesara/llm-inference-orchestrator",
       demo: null
+    },
+    {
+      title: "AI Integration Discovery Agent",
+      tagline: "An LLM agent that discovers how to integrate a third-party API on its own.",
+      status: "live",
+      problem: "Integrating a third-party SaaS API starts with a slow, manual discovery phase — reading docs, identifying auth requirements, locating endpoints, and validating assumptions against the real service — before any connector code gets written.",
+      architecture: "A Node.js agent runs a manual tool-use loop against a provider-agnostic LLMProvider interface (local Ollama by default, Anthropic Claude via a one-line env change), giving the model a sandboxed docs-reader tool and a GET-only, localhost-only HTTP tool to investigate a mock identity-platform API. A hard iteration cap and a Zod-validated submit_discovery_result tool call enforce a structured final output.",
+      result: "The multi-step discovery loop (read docs → validate against the live API → submit) is verified deterministically with a mocked LLMProvider in the test suite. Testing also surfaced and documented an honest limitation: smaller local models sometimes skip real validation calls and fabricate plausible-looking results, while the harness and schema stay correct regardless of model quality.",
+      tags: ["Node.js", "TypeScript", "LLM Agents", "Tool Calling", "Zod", "Ollama", "Anthropic"],
+      repo: "https://github.com/dipak-sumesara/ai-integration-discovery-agent",
+      demo: null
     }
   ];
 
