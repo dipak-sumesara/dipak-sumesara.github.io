@@ -121,10 +121,16 @@
   .status-client{ @apply border-[var(--border)] bg-[var(--surface-2)] text-[var(--text-dim)]; }
   .status-featured{ @apply border-[var(--accent)] bg-[var(--accent-soft)] text-[var(--accent-strong)]; }
 
+  .filter-btn{
+    @apply cursor-pointer rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-2 font-mono text-[0.78rem] text-[var(--text-dim)] transition-colors duration-150 ease-out hover:border-[var(--accent)] hover:text-[var(--text)];
+  }
+  .filter-btn[aria-pressed="true"]{
+    @apply border-[var(--accent)] bg-[var(--accent-soft)] text-[var(--accent-strong)];
+  }
+
   .project-card{
     @apply flex flex-col gap-3.5 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-[22px] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-[var(--accent)] hover:shadow-[0_16px_40px_-20px_var(--accent)];
   }
-  .project-card-compact{ @apply gap-2.5 p-[18px]; }
   .project-highlights{ @apply m-0 flex list-disc flex-col gap-1.5 pl-[18px] text-[0.86rem] text-[var(--text-dim)] marker:text-[var(--accent)]; }
 
   .stack-card{
