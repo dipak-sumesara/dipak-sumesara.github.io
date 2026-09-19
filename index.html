@@ -199,10 +199,17 @@
 
   /* ---------- projects ---------- */
   .project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;}
+  .project-grid.featured{grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px;}
+  .project-grid.compact{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
+  .more-projects-heading{
+    font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;
+    color:var(--text-dim);margin:40px 0 16px;
+  }
   .project-card{
     background:var(--surface);border:1px solid var(--border);border-radius:14px;
     padding:22px;display:flex;flex-direction:column;gap:14px;
   }
+  .project-card.compact{padding:18px;gap:10px;}
   .project-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
   .project-head h3{font-size:1.08rem;line-height:1.3;}
   .status-tag{
@@ -211,11 +218,14 @@
   }
   .status-live{background:var(--accent-soft);color:var(--accent-strong);border-color:var(--accent);}
   .status-in-progress{background:var(--warn-soft);color:var(--warn);border-color:var(--warn);}
-  .status-planned{background:var(--surface-2);color:var(--text-dim);border-color:var(--border);}
+  .status-planned,.status-client{background:var(--surface-2);color:var(--text-dim);border-color:var(--border);}
   .project-tagline{color:var(--text-dim);font-size:0.92rem;margin:0;}
   .project-block{display:flex;flex-direction:column;gap:4px;}
   .project-label{font-family:var(--font-mono);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--accent-strong);}
   .project-block p{margin:0;font-size:0.88rem;color:var(--text);line-height:1.5;}
+  .project-desc-compact{margin:0;font-size:0.85rem;color:var(--text-dim);line-height:1.5;}
+  .project-highlights{margin:0;padding-left:18px;color:var(--text-dim);font-size:0.86rem;display:flex;flex-direction:column;gap:5px;}
+  .project-highlights li::marker{color:var(--accent);}
   .project-result{
     font-family:var(--font-mono);font-size:0.83rem;color:var(--accent-strong);
     background:var(--accent-soft);border:1px solid var(--border);border-radius:8px;padding:9px 11px;
@@ -346,7 +356,9 @@
         <h2 id="projects-heading">Projects</h2>
         <span class="section-tag">Selected work</span>
       </div>
-      <div class="project-grid" id="project-grid"></div>
+      <div class="project-grid featured" id="project-grid-featured"></div>
+      <h3 class="more-projects-heading">More projects</h3>
+      <div class="project-grid compact" id="project-grid-more"></div>
     </div>
   </section>
 
@@ -595,84 +607,147 @@
 <script>
   /* ===================================================================
      EDIT PROJECTS HERE — add, remove, or fill in placeholder fields.
-     Each project renders as a card in the #project-grid container below.
-     status: 'live' | 'in-progress' | 'planned'
+     featured: true renders a large card in the top grid; false renders a
+     compact card in the "More projects" grid below it.
      repo / demo: full URL, or a placeholder string starting with "ADD "
-                  (placeholders render as a pending pill instead of a link)
+                  (placeholders render as a pending pill instead of a link).
+     demo is left null unless a live, working deploy exists.
      =================================================================== */
   const PROJECTS = [
     {
-      title: "High-Performance API Engine",
-      tagline: "Distributed rate limiter, proven under real load.",
-      status: "live",
-      problem: "Multiple API instances enforcing one shared rate limit is a classic race-condition trap — naive counters let clients slip through under concurrency.",
-      architecture: "Fastify service backed by Redis, using an atomic Lua script for the token-bucket check-and-decrement so limit checks stay race-free across horizontally scaled instances. Ships with Prometheus metrics and graceful shutdown handling.",
-      result: "~470 req/s sustained, p95 latency under 10ms on the fast path, zero race conditions observed under 50 concurrent virtual users (k6 load test, documented in the repo).",
-      tags: ["Fastify", "Redis", "Lua", "Prometheus", "Docker", "k6"],
+      title: "AI Integration Discovery Agent",
+      tagline: "An autonomous agent that reads API docs, probes a live API, and emits a validated connector spec.",
+      description: "A backend agent that automates the discovery phase of integrating a third-party SaaS API. It decides for itself what documentation to read and which endpoints to probe, reconciles the docs against real API behavior (the sample docs are deliberately wrong in places), and finalizes by calling a submit tool whose payload is validated against a Zod schema — so the output is machine-consumable by construction, not by hoping the model formats JSON correctly. Built on a small provider interface, so the same loop runs against local Ollama models or Anthropic Claude via a one-line env change. Tool surface is deliberately narrow: GET-only, localhost-only HTTP and a path-traversal-safe file reader. Hard iteration cap, retry-on-schema-failure, and unit tests that drive the loop with a mocked provider.",
+      tags: ["TypeScript", "Node.js", "LLM Tool Calling", "Zod", "Ollama", "Anthropic API"],
+      highlights: [
+        "Multi-step agent loop — the model chooses tools and order; Node only executes",
+        "Provider-agnostic: swap Ollama ↔ Claude with one env var, zero code change",
+        "Structured output enforced via tool call + Zod validation with self-correction",
+        "SSRF-safe and path-traversal-safe tool boundaries"
+      ],
+      featured: true,
+      repo: "https://github.com/dipak-sumesara/ai-integration-discovery-agent",
+      demo: null
+    },
+    {
+      title: "AI Commerce Assistant",
+      tagline: "RAG-backed commerce assistant where the LLM interprets and the backend decides.",
+      description: "A full-stack GenAI assistant for a B2B merchandise platform, built on the principle that the LLM handles language understanding while TypeScript handles business execution. Markdown knowledge docs are chunked, embedded through Ollama, and retrieved by in-memory cosine similarity; natural-language product searches are converted into a Zod-validated intent object, after which deterministic code applies hard filters and soft preference ranking. Out-of-domain requests are refused before retrieval or generation runs, and retrieved documents are treated as untrusted data that cannot override the system prompt. React UI surfaces both the AI's interpretation and the results.",
+      tags: ["TypeScript", "Fastify", "React", "RAG", "Ollama", "Zod"],
+      highlights: [
+        "LLM never queries the database, filters products, or executes code",
+        "Domain guardrail short-circuits out-of-scope input before RAG",
+        "Prompt-injection-aware: retrieved context is untrusted by design",
+        "Tests mock the Ollama layer — suite runs with no model required"
+      ],
+      featured: true,
+      repo: "https://github.com/dipak-sumesara/ai-commerce-assistant",
+      demo: null
+    },
+    {
+      title: "LLM Inference Orchestrator",
+      tagline: "Async job infrastructure for LLM calls — queue, retries, dead-letters, idempotency.",
+      description: "Production-style backend modeling how LLM inference should be run at scale: a stateless API service accepts jobs and returns immediately, a separate worker process consumes them from a Redis-backed queue, failures retry with exponential backoff, and jobs that exhaust their budget are dead-lettered rather than looping forever. Clients can pass an idempotency key so a timeout-and-retry never creates duplicate work. Deliberate failure simulation exercises the resilience paths.",
+      tags: ["TypeScript", "Node.js", "Redis", "Distributed Queues", "Idempotency", "Workers"],
+      highlights: [
+        "API and worker run as separate processes — workers scale horizontally",
+        "Exponential backoff with an enforced max-retry threshold and dead-letter state",
+        "x-idempotency-key returns the original job instead of duplicating it",
+        "Atomic job state transitions in Redis"
+      ],
+      featured: true,
+      repo: "https://github.com/dipak-sumesara/llm-inference-orchestrator",
+      demo: null
+    },
+    {
+      title: "High Performance API Engine",
+      tagline: "Distributed token-bucket rate limiting with atomic Redis Lua, instrumented and load-tested.",
+      description: "A stateless Fastify service that enforces per-client rate limits across horizontally scaled instances by keeping bucket state in Redis and doing the check-and-decrement inside a single atomic Lua script, which removes the read-modify-write race that naive rate limiters have under concurrency. Prometheus metrics expose request counts, rate-limited counts, and a latency histogram; SIGTERM/SIGINT are handled for graceful shutdown; the whole thing runs under Docker Compose and is load-tested with k6.",
+      tags: ["TypeScript", "Fastify", "Redis", "Lua", "Prometheus", "k6"],
+      highlights: [
+        "Atomic Lua execution — no race conditions observed under concurrent load",
+        "Local k6 benchmark: ~470 req/s at 50 VUs, p95 under 10ms on the fast path",
+        "Prometheus latency histogram and rate-limit counters, Grafana-ready",
+        "Stateless: shared Redis state lets instances enforce limits consistently"
+      ],
+      featured: true,
       repo: "https://github.com/dipak-sumesara/high-performance-api-engine",
       demo: null
     },
     {
       title: "Event Sync Platform",
-      tagline: "Reliable webhook delivery to unreliable external systems.",
-      status: "live",
-      problem: "Integrating with external platforms (Salesforce, ERPs, payment gateways) means living with network failures, partial downtime, and duplicate deliveries — most integrations don't handle any of it correctly.",
-      architecture: "An Order Service emits domain events, an Event Processor attempts webhook delivery, failures queue in Redis, a retry worker applies exponential backoff, and repeated failures fall through to dead-letter handling. Redis also backs idempotent duplicate detection so retried events never apply twice.",
-      result: "Idempotent processing and exponential-backoff retry validated end-to-end across three services against a simulated unreliable external system.",
-      tags: ["Node.js", "NestJS", "Redis", "Event-driven", "Idempotency", "DLQ"],
+      tagline: "Webhook-driven event sync that stays correct when the other system goes down.",
+      description: "A multi-service platform simulating the failure modes of integrating with external platforms — network failures, partial downtime, duplicate deliveries. An order service emits domain events, an event processor attempts webhook delivery against a deliberately unreliable mock system, and failures enter a Redis retry queue with exponential backoff and a dead-letter threshold. Redis-backed duplicate detection makes event handling idempotent, so at-least-once delivery doesn't produce duplicate side effects.",
+      tags: ["TypeScript", "Node.js", "Redis", "Webhooks", "Event-Driven", "Microservices"],
+      highlights: [
+        "Idempotent processing with Redis-based duplicate detection",
+        "Exponential backoff (2^n) plus dead-letter threshold",
+        "Multi-service layout: order service, event processor, mock external system",
+        "Models eventual consistency between systems, not just API wiring"
+      ],
+      featured: false,
       repo: "https://github.com/dipak-sumesara/event-sync-platform",
       demo: null
     },
     {
-      title: "LLM Inference Orchestrator",
-      tagline: "Production-style infrastructure for resilient LLM job processing.",
-      status: "in-progress",
-      problem: "LLM APIs are slow, flaky, and expensive to call synchronously at scale — most demos just wrap a single blocking call and stop there.",
-      architecture: "An API service accepts jobs and returns immediately, pushing work onto a Redis-backed queue. A separate worker service processes jobs with exponential-backoff retry, dead-letters after max attempts, and honors client-supplied idempotency keys so retried requests never duplicate work.",
-      result: "Async ingestion, retry/DLQ, and idempotency are implemented and running. Multi-provider routing, semantic caching, and load-test benchmarks are the next milestone — noted openly as in progress rather than claimed as done.",
-      tags: ["Node.js", "Redis", "Queue/Worker", "Idempotency"],
-      repo: "https://github.com/dipak-sumesara/llm-inference-orchestrator",
+      title: "NLQ Commerce Engine",
+      tagline: "Natural-language product search with explainable, deterministic ranking.",
+      description: "A Fastify API that turns conversational shopping intent (\"budget 50000, gaming laptop from Asus\") into a strict JSON filter schema via OpenAI, validates and sanitizes it with Zod, then filters and ranks entirely in deterministic TypeScript. Every result carries a ranking breakdown — keyword match count, normalized rating score, budget-proximity score, and the weighted total — so a result can always be explained rather than attributed to a model. Structured JSON logging, request timing hooks, a rule-based parser mode that runs with no API key, Docker Compose, and unit plus integration tests.",
+      tags: ["TypeScript", "Fastify", "OpenAI", "Zod", "Docker", "Vitest"],
+      highlights: [
+        "Strict JSON schema + Zod validation with budget/brand normalization and repair",
+        "Explainable ranking: every score component returned with the result",
+        "rule-based parser mode runs the full pipeline with zero API cost",
+        "Integration test for /search, unit test for the filtering engine"
+      ],
+      featured: false,
+      repo: "https://github.com/dipak-sumesara/NLQ-Commerce-Engine",
       demo: null
     },
     {
-      title: "AI Integration Discovery Agent",
-      tagline: "An LLM agent that discovers how to integrate a third-party API on its own.",
-      status: "live",
-      problem: "Integrating a third-party SaaS API starts with a slow, manual discovery phase — reading docs, identifying auth requirements, locating endpoints, and validating assumptions against the real service — before any connector code gets written.",
-      architecture: "A Node.js agent runs a manual tool-use loop against a provider-agnostic LLMProvider interface (local Ollama by default, Anthropic Claude via a one-line env change), giving the model a sandboxed docs-reader tool and a GET-only, localhost-only HTTP tool to investigate a mock identity-platform API. A hard iteration cap and a Zod-validated submit_discovery_result tool call enforce a structured final output.",
-      result: "The multi-step discovery loop (read docs → validate against the live API → submit) is verified deterministically with a mocked LLMProvider in the test suite. Testing also surfaced and documented an honest limitation: smaller local models sometimes skip real validation calls and fabricate plausible-looking results, while the harness and schema stay correct regardless of model quality.",
-      tags: ["Node.js", "TypeScript", "LLM Agents", "Tool Calling", "Zod", "Ollama", "Anthropic"],
-      repo: "https://github.com/dipak-sumesara/ai-integration-discovery-agent",
+      title: "AI Character Chat",
+      tagline: "Persona-driven conversational app running entirely on a local model.",
+      description: "A full-stack character chat application with a persona engine that composes a character's personality, background, speech style, and emotional boundaries into a tightly constrained prompt, then runs it against a locally hosted Ollama model with tuned sampling parameters — no cloud API and no data leaving the machine. Conversations and messages persist in MongoDB with a sliding recent-context window; the React 19 client handles state with Zustand and animation with Framer Motion.",
+      tags: ["React 19", "TypeScript", "Express", "MongoDB", "Zustand", "Ollama"],
+      highlights: [
+        "Modular backend: character, conversation, message, and AI modules",
+        "Sliding context window keeps prompts bounded as conversations grow",
+        "Runs fully offline against a local model"
+      ],
+      featured: false,
+      repo: "https://github.com/dipak-sumesara/AI-Chatbot",
+      demo: null
+    },
+    {
+      title: "Shah Arts Studio",
+      tagline: "Marketing site for an arts studio, built on the current Next.js stack.",
+      description: "A client-facing studio site built with Next.js App Router, React 19, Tailwind 4, and a shadcn/Base UI component layer, with Vercel Analytics wired in.",
+      tags: ["Next.js", "React 19", "TypeScript", "Tailwind CSS", "shadcn/ui"],
+      category: "Client work",
+      featured: false,
+      repo: "https://github.com/dipak-sumesara/shah-arts-studio",
+      demo: null
+    },
+    {
+      title: "Little Forever Studio",
+      tagline: "Animated single-page studio site.",
+      description: "A lightweight React and Vite single-page site with Framer Motion animation and a Tailwind design system, kept fully type-checked in the build step.",
+      tags: ["React", "TypeScript", "Vite", "Tailwind CSS", "Framer Motion"],
+      category: "Client work",
+      featured: false,
+      repo: "https://github.com/dipak-sumesara/little-forever-studio",
       demo: null
     }
   ];
 
   (function renderProjects(){
-    const STATUS_LABEL = { "live": "Live", "in-progress": "In Progress", "planned": "Planned" };
     const isPlaceholder = v => typeof v === "string" && v.trim().toUpperCase().startsWith("ADD ");
-    const grid = document.getElementById("project-grid");
-    const frag = document.createDocumentFragment();
+    const featuredGrid = document.getElementById("project-grid-featured");
+    const moreGrid = document.getElementById("project-grid-more");
+    const featuredFrag = document.createDocumentFragment();
+    const moreFrag = document.createDocumentFragment();
 
-    PROJECTS.forEach(p => {
-      const card = document.createElement("article");
-      card.className = "project-card";
-
-      const chips = p.tags.map(t => `<span class="chip">${t}</span>`).join("");
-      const resultClass = isPlaceholder(p.result) ? "project-result todo" : "project-result";
-
-      card.innerHTML = `
-        <div class="project-head">
-          <h3>${p.title}</h3>
-          <span class="status-tag status-${p.status}">${STATUS_LABEL[p.status]}</span>
-        </div>
-        <p class="project-tagline">${p.tagline}</p>
-        <div class="project-block"><span class="project-label">Problem</span><p>${p.problem}</p></div>
-        <div class="project-block"><span class="project-label">Architecture</span><p>${p.architecture}</p></div>
-        <div class="${resultClass}">${p.result}</div>
-        <div class="chips">${chips}</div>
-        <div class="project-links"></div>
-      `;
-
+    const renderLinks = (card, p) => {
       const linksEl = card.querySelector(".project-links");
       if (p.repo) {
         if (isPlaceholder(p.repo)) {
@@ -688,11 +763,51 @@
           linksEl.insertAdjacentHTML("beforeend", `<a class="btn btn-ghost small" href="${p.demo}" target="_blank" rel="noopener">Live demo →</a>`);
         }
       }
+    };
 
-      frag.appendChild(card);
+    PROJECTS.forEach(p => {
+      const chips = p.tags.slice(0, 6).map(t => `<span class="chip">${t}</span>`).join("");
+      const highlightsHtml = p.highlights
+        ? `<ul class="project-highlights">${p.highlights.map(h => `<li>${h}</li>`).join("")}</ul>`
+        : "";
+      const categoryHtml = p.category ? `<span class="status-tag status-client">${p.category}</span>` : "";
+
+      const card = document.createElement("article");
+
+      if (p.featured) {
+        card.className = "project-card";
+        card.innerHTML = `
+          <div class="project-head">
+            <h3>${p.title}</h3>
+          </div>
+          <p class="project-tagline">${p.tagline}</p>
+          <div class="project-block"><p>${p.description}</p></div>
+          ${highlightsHtml}
+          <div class="chips">${chips}</div>
+          <div class="project-links"></div>
+        `;
+        renderLinks(card, p);
+        featuredFrag.appendChild(card);
+      } else {
+        card.className = "project-card compact";
+        card.innerHTML = `
+          <div class="project-head">
+            <h3>${p.title}</h3>
+            ${categoryHtml}
+          </div>
+          <p class="project-tagline">${p.tagline}</p>
+          <p class="project-desc-compact">${p.description}</p>
+          ${highlightsHtml}
+          <div class="chips">${chips}</div>
+          <div class="project-links"></div>
+        `;
+        renderLinks(card, p);
+        moreFrag.appendChild(card);
+      }
     });
 
-    grid.appendChild(frag);
+    featuredGrid.appendChild(featuredFrag);
+    moreGrid.appendChild(moreFrag);
   })();
 
   (function smoothScrollNav(){
