@@ -12,465 +12,206 @@
 <meta property="og:url" content="https://dipak-sumesara.github.io/">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
-<style>
-  :root{
-    --bg:#F5F7FA;
-    --surface:#FFFFFF;
-    --surface-2:#EDF1F6;
-    --border:#D9DFE8;
-    --text:#12151C;
-    --text-dim:#57626F;
-    --accent:#0C8479;
-    --accent-strong:#086159;
-    --accent-soft:#E1F3F0;
-    --warn:#B45309;
-    --warn-soft:#FBEEDD;
-    --shadow:0 1px 2px rgba(15,20,30,0.06),0 10px 28px -14px rgba(15,20,30,0.16);
-    --font-display:'IBM Plex Sans',system-ui,-apple-system,sans-serif;
-    --font-body:'IBM Plex Sans',system-ui,-apple-system,sans-serif;
-    --font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
-  }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --bg:#0A0D12;
-      --surface:#12161F;
-      --surface-2:#171C27;
-      --border:#262D3B;
-      --text:#E8ECF2;
-      --text-dim:#8B95A8;
-      --accent:#5EEAD4;
-      --accent-strong:#99F6E4;
-      --accent-soft:rgba(94,234,212,0.12);
-      --warn:#F5A623;
-      --warn-soft:rgba(245,166,35,0.12);
-      --shadow:0 1px 2px rgba(0,0,0,0.4),0 14px 32px -16px rgba(0,0,0,0.65);
-    }
-  }
-  :root[data-theme="dark"]{
-    --bg:#0A0D12;
-    --surface:#12161F;
-    --surface-2:#171C27;
-    --border:#262D3B;
-    --text:#E8ECF2;
-    --text-dim:#8B95A8;
-    --accent:#5EEAD4;
-    --accent-strong:#99F6E4;
-    --accent-soft:rgba(94,234,212,0.12);
-    --warn:#F5A623;
-    --warn-soft:rgba(245,166,35,0.12);
-    --shadow:0 1px 2px rgba(0,0,0,0.4),0 14px 32px -16px rgba(0,0,0,0.65);
-  }
-
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family:var(--font-body);
-    font-size:16px;
-    line-height:1.55;
-    -webkit-font-smoothing:antialiased;
-  }
-  img{max-width:100%;}
-  [hidden]{display:none!important;}
-  h1,h2,h3,h4{font-family:var(--font-display);text-wrap:balance;margin:0;}
-  a{color:inherit;}
-  a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px;}
-  .wrap{max-width:1080px;margin:0 auto;padding-inline:24px;}
-  @media (max-width:640px){ .wrap{padding-inline:18px;} }
-
-  .skip-link{
-    position:absolute;left:-9999px;top:0;
-    background:var(--surface);color:var(--text);
-    padding:10px 16px;border-radius:8px;border:1px solid var(--border);
-    font-family:var(--font-mono);font-size:0.85rem;z-index:100;
-  }
-  .skip-link:focus{left:16px;top:16px;}
-
-  /* ---------- top bar ---------- */
-  .topbar{
-    position:sticky;top:0;z-index:40;
-    background:color-mix(in srgb, var(--bg) 88%, transparent);
-    backdrop-filter:blur(10px);
-    -webkit-backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--border);
-  }
-  .topbar-inner{
-    max-width:1080px;margin:0 auto;padding:14px 24px;
-    display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
-  }
-  @media (max-width:640px){ .topbar-inner{padding:12px 18px;} }
-  .brand{display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-weight:600;font-size:0.95rem;letter-spacing:0.01em;text-decoration:none;}
-  .brand-mark{
-    width:28px;height:28px;border-radius:7px;
-    background:var(--accent-soft);color:var(--accent-strong);
-    display:flex;align-items:center;justify-content:center;
-    font-family:var(--font-mono);font-size:0.72rem;font-weight:700;
-    border:1px solid var(--border);
-  }
-  .status-pill{
-    display:inline-flex;align-items:center;gap:7px;
-    font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.04em;
-    color:var(--text-dim);text-transform:uppercase;
-    padding:5px 10px;border:1px solid var(--border);border-radius:999px;background:var(--surface);
-  }
-  .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none;
-    animation:ping 2.2s ease-out infinite;}
-  @keyframes ping{
-    0%{box-shadow:0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent);}
-    70%{box-shadow:0 0 0 7px color-mix(in srgb, var(--accent) 0%, transparent);}
-    100%{box-shadow:0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent);}
-  }
-  .nav-links{display:flex;gap:20px;font-size:0.9rem;list-style:none;margin:0;padding:0;}
-  .nav-links a{text-decoration:none;color:var(--text-dim);}
-  .nav-links a:hover{color:var(--text);}
-  @media (max-width:820px){ .nav-links{display:none;} }
-
-  /* ---------- hero ---------- */
-  .hero{padding:56px 0 44px;}
-  @media (max-width:640px){ .hero{padding:36px 0 32px;} }
-  .hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:48px;align-items:start;}
-  .hero-grid > div{min-width:0;}
-  @media (max-width:880px){ .hero-grid{grid-template-columns:1fr;gap:32px;} }
-
-  .avatar-row{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
-  .avatar{
-    width:64px;height:64px;border-radius:50%;object-fit:cover;flex:none;
-    border:2px solid var(--border);box-shadow:var(--shadow);
-  }
-  .eyebrow{font-family:var(--font-mono);font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-strong);margin-bottom:0;display:block;}
-  .hero h1{font-size:clamp(2.1rem,5vw,3.3rem);font-weight:700;letter-spacing:-0.02em;line-height:1.05;margin-bottom:10px;}
-  .hero .role{font-size:clamp(1.05rem,2vw,1.25rem);color:var(--text-dim);font-weight:500;margin-bottom:20px;}
-  .hero .role strong{color:var(--text);font-weight:600;}
-  .hero p.summary{max-width:60ch;color:var(--text-dim);font-size:1rem;margin-bottom:26px;}
-  .hero-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:34px;}
-  .btn{
-    font-family:var(--font-mono);font-size:0.85rem;font-weight:500;
-    padding:11px 18px;border-radius:8px;text-decoration:none;
-    display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);
-    transition:transform .15s ease, border-color .15s ease;
-    cursor:pointer;background:none;color:inherit;
-  }
-  .btn:hover{transform:translateY(-1px);}
-  .btn-primary{background:var(--accent);border-color:var(--accent);color:var(--bg);}
-  .btn-primary:hover{border-color:var(--accent-strong);}
-  .btn-ghost{background:var(--surface);color:var(--text);}
-  .btn-ghost:hover{border-color:var(--accent);}
-  .btn.small{padding:8px 12px;font-size:0.78rem;}
-
-  .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
-  @media (max-width:640px){ .stat-row{grid-template-columns:repeat(2,1fr);} }
-  .stat{background:var(--surface);padding:16px 14px;}
-  .stat .num{font-family:var(--font-mono);font-weight:600;font-size:1.4rem;color:var(--accent-strong);display:block;}
-  .stat .label{font-size:0.78rem;color:var(--text-dim);margin-top:4px;display:block;}
-
-  /* ---------- terminal (reused: hero + contact) ---------- */
-  .terminal{
-    background:#0D1117;border-radius:12px;overflow:hidden;
-    box-shadow:var(--shadow);border:1px solid #1F2733;
-  }
-  .terminal-bar{display:flex;align-items:center;gap:7px;padding:11px 14px;background:#161C27;border-bottom:1px solid #1F2733;}
-  .t-dot1,.t-dot2,.t-dot3{width:10px;height:10px;border-radius:50%;display:inline-block;flex:none;}
-  .t-dot1{background:#FF5F57;} .t-dot2{background:#FEBC2E;} .t-dot3{background:#28C840;}
-  .terminal-title{margin-left:8px;font-family:var(--font-mono);font-size:0.72rem;color:#7C8798;}
-  .terminal-body{
-    margin:0;padding:18px 18px 20px;color:#D7E1EE;font-family:var(--font-mono);
-    font-size:0.82rem;line-height:1.7;
-  }
-  .term-line{white-space:normal;word-break:break-word;}
-  .term-row{display:flex;flex-wrap:wrap;column-gap:10px;row-gap:0;margin:2px 0;}
-  .term-label{color:#7C8798;flex:0 0 76px;}
-  .term-val{color:#F3F6FA;flex:1 1 180px;min-width:0;word-break:break-word;}
-  @media (max-width:400px){ .terminal-body{font-size:0.76rem;} .term-label{flex-basis:68px;} }
-  .t-prompt{color:#5EEAD4;}
-  .t-key{color:#7C8798;}
-  .t-val{color:#F3F6FA;}
-  .t-hl{color:#F5A623;}
-  .cursor{display:inline-block;width:7px;height:14px;background:#5EEAD4;vertical-align:-2px;animation:blink 1s step-end infinite;}
-  @keyframes blink{50%{opacity:0;}}
-  @media (prefers-reduced-motion: reduce){ .cursor{animation:none;} .dot{animation:none;} }
-
-  /* ---------- section shells ---------- */
-  section{padding:60px 0;border-top:1px solid var(--border);}
-  @media (max-width:640px){ section{padding:44px 0;} }
-  .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:32px;flex-wrap:wrap;}
-  .section-head h2{font-size:clamp(1.4rem,3vw,1.9rem);letter-spacing:-0.01em;}
-  .section-tag{font-family:var(--font-mono);font-size:0.75rem;letter-spacing:0.06em;color:var(--text-dim);text-transform:uppercase;}
-
-  /* ---------- projects ---------- */
-  .project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;}
-  .project-card{
-    background:var(--surface);border:1px solid var(--border);border-radius:14px;
-    padding:22px;display:flex;flex-direction:column;gap:14px;
-  }
-  .project-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
-  .project-head h3{font-size:1.08rem;line-height:1.3;}
-  .status-tag{
-    font-family:var(--font-mono);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.05em;
-    padding:4px 9px;border-radius:999px;border:1px solid;white-space:nowrap;flex:none;
-  }
-  .status-live{background:var(--accent-soft);color:var(--accent-strong);border-color:var(--accent);}
-  .status-in-progress{background:var(--warn-soft);color:var(--warn);border-color:var(--warn);}
-  .status-planned{background:var(--surface-2);color:var(--text-dim);border-color:var(--border);}
-  .project-tagline{color:var(--text-dim);font-size:0.92rem;margin:0;}
-  .project-block{display:flex;flex-direction:column;gap:4px;}
-  .project-label{font-family:var(--font-mono);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--accent-strong);}
-  .project-block p{margin:0;font-size:0.88rem;color:var(--text);line-height:1.5;}
-  .project-result{
-    font-family:var(--font-mono);font-size:0.83rem;color:var(--accent-strong);
-    background:var(--accent-soft);border:1px solid var(--border);border-radius:8px;padding:9px 11px;
-  }
-  .project-result.todo{color:var(--warn);background:var(--warn-soft);border-style:dashed;border-color:var(--warn);}
-  .chips{display:flex;flex-wrap:wrap;gap:6px;}
-  .chip{
-    font-family:var(--font-mono);font-size:0.76rem;color:var(--text);
-    background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:4px 8px;
-  }
-  .chip.todo{color:var(--warn);border-style:dashed;border-color:var(--warn);background:var(--warn-soft);}
-  .project-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:4px;}
-
-  /* ---------- experience ---------- */
-  .timeline{display:flex;flex-direction:column;gap:0;}
-  .job{display:grid;grid-template-columns:170px 1fr;gap:28px;padding:28px 0;border-top:1px solid var(--border);}
-  .job:first-child{border-top:none;padding-top:0;}
-  @media (max-width:700px){ .job{grid-template-columns:1fr;gap:10px;} }
-  .job-meta{display:flex;flex-direction:column;gap:8px;padding-top:3px;}
-  .job-dates{font-family:var(--font-mono);font-size:0.78rem;color:var(--text-dim);letter-spacing:0.02em;}
-  .job-uptime{
-    font-family:var(--font-mono);font-size:0.72rem;color:var(--accent-strong);
-    background:var(--accent-soft);border:1px solid var(--border);border-radius:6px;
-    padding:3px 8px;width:fit-content;
-  }
-  .job h3{font-size:1.15rem;font-weight:600;margin-bottom:3px;}
-  .job h3 .co{color:var(--accent-strong);}
-  .job h3 small{font-weight:400;color:var(--text-dim);font-size:0.85em;}
-  .job-loc{font-size:0.85rem;color:var(--text-dim);margin-bottom:16px;}
-  .subproject{margin-top:18px;}
-  .subproject:first-of-type{margin-top:0;}
-  .subproject h4{font-size:0.95rem;font-weight:600;margin-bottom:8px;color:var(--text);}
-  .subproject h4 .tag{font-family:var(--font-mono);font-weight:400;font-size:0.78em;color:var(--text-dim);}
-  .job ul{margin:0;padding-left:18px;color:var(--text-dim);font-size:0.93rem;display:flex;flex-direction:column;gap:7px;}
-  .job li::marker{color:var(--accent);}
-
-  /* ---------- stack ---------- */
-  .stack-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
-  @media (max-width:880px){ .stack-grid{grid-template-columns:repeat(2,1fr);} }
-  @media (max-width:480px){ .stack-grid{grid-template-columns:1fr;} }
-  .stack-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;}
-  .stack-card h4{font-family:var(--font-mono);font-size:0.78rem;letter-spacing:0.05em;text-transform:uppercase;color:var(--accent-strong);margin-bottom:12px;}
-
-  /* ---------- education ---------- */
-  .edu-card{
-    display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;
-    background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;
-  }
-  .edu-card h3{font-size:1.05rem;margin-bottom:4px;}
-  .edu-card p{margin:0;color:var(--text-dim);font-size:0.9rem;}
-  .edu-year{font-family:var(--font-mono);color:var(--accent-strong);font-size:0.9rem;}
-
-  /* ---------- contact / footer ---------- */
-  .contact-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;}
-  footer{padding:26px 0;border-top:1px solid var(--border);}
-  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
-  footer p{margin:0;font-size:0.82rem;color:var(--text-dim);font-family:var(--font-mono);}
-</style>
+<link rel="stylesheet" href="./dist/styles.css">
 </head>
-<body>
-<a class="skip-link" href="#main">Skip to main content</a>
+<body class="m-0 bg-[var(--bg)] text-[var(--text)] font-sans text-base leading-[1.55]">
+<a class="skip-link absolute -left-[9999px] top-0 z-[100] rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 font-mono text-sm text-[var(--text)] focus:left-4 focus:top-4" href="#main">Skip to main content</a>
 
-<header class="topbar">
-  <div class="topbar-inner">
-    <a class="brand" href="#top">
-      <span class="brand-mark" aria-hidden="true">DS</span>
+<header class="sticky top-0 z-40 border-b border-[var(--border)] bg-[color-mix(in_srgb,var(--bg)_88%,transparent)] backdrop-blur-[10px]">
+  <div class="wrap flex flex-wrap items-center justify-between gap-4 py-3 sm:py-3.5">
+    <a class="flex items-center gap-2.5 font-mono font-semibold text-[0.95rem] tracking-[0.01em] no-underline" href="#top">
+      <span class="flex h-7 w-7 items-center justify-center rounded-[7px] border border-[var(--border)] bg-[var(--accent-soft)] font-mono text-[0.72rem] font-bold text-[var(--accent-strong)]" aria-hidden="true">DS</span>
       Dipak Sumesara
     </a>
-    <nav class="nav-links" aria-label="Primary">
-      <a href="#projects">Projects</a>
-      <a href="#experience">Experience</a>
-      <a href="#stack">Stack</a>
-      <a href="#education">Education</a>
-      <a href="#contact">Contact</a>
+    <nav class="hidden min-[820px]:flex gap-5 text-[0.9rem] list-none m-0 p-0" aria-label="Primary">
+      <a class="text-[var(--text-dim)] no-underline hover:text-[var(--text)]" href="#projects">Projects</a>
+      <a class="text-[var(--text-dim)] no-underline hover:text-[var(--text)]" href="#experience">Experience</a>
+      <a class="text-[var(--text-dim)] no-underline hover:text-[var(--text)]" href="#stack">Stack</a>
+      <a class="text-[var(--text-dim)] no-underline hover:text-[var(--text)]" href="#education">Education</a>
+      <a class="text-[var(--text-dim)] no-underline hover:text-[var(--text)]" href="#contact">Contact</a>
     </nav>
-    <span class="status-pill"><span class="dot" aria-hidden="true"></span>Open to new roles</span>
+    <span class="status-pill">
+      <span class="h-[7px] w-[7px] shrink-0 animate-status-ping rounded-full bg-[var(--accent)]" aria-hidden="true"></span>
+      Open to new roles
+    </span>
   </div>
 </header>
 
 <main id="main">
-  <section class="hero" id="top" aria-labelledby="hero-heading" style="border-top:none;">
-    <div class="wrap hero-grid">
-      <div>
-        <div class="avatar-row">
-          <img class="avatar" src="./avatar.jpg" alt="Portrait of Dipak Sumesara" width="64" height="64">
-          <span class="eyebrow">Ahmedabad, India · Remote (EST overlap) · Open to relocation</span>
+  <section class="pt-9 pb-8 sm:pt-14 sm:pb-11" id="top" aria-labelledby="hero-heading">
+    <div class="wrap grid grid-cols-1 min-[880px]:grid-cols-[1.1fr_0.9fr] items-start gap-8 min-[880px]:gap-12">
+      <div class="min-w-0">
+        <div class="mb-[18px] flex items-center gap-3.5">
+          <img class="h-16 w-16 shrink-0 rounded-full border-2 border-[var(--border)] object-cover shadow-[var(--shadow)]" src="./avatar.jpg" alt="Portrait of Dipak Sumesara" width="64" height="64">
+          <span class="block font-mono text-[0.78rem] uppercase tracking-[0.08em] text-[var(--accent-strong)]">Ahmedabad, India · Remote (EST overlap) · Open to relocation</span>
         </div>
-        <h1 id="hero-heading">Dipak Sumesara</h1>
-        <p class="role">Senior Software Engineer — <strong>Full-Stack, Backend-Heavy</strong></p>
-        <p class="summary">Backend-heavy full-stack engineer with 8+ years designing and shipping scalable systems end-to-end. Three years as architect and lead on a US enterprise SaaS platform, cutting API response times from seconds to milliseconds. Built the real-time backend for a fantasy-sports app at 100K+ concurrent users, and contributed to a Singapore government health platform run under a 90% test-coverage gate.</p>
-        <div class="hero-ctas">
+        <h1 id="hero-heading" class="mb-2.5 text-[clamp(2.1rem,5vw,3.3rem)] font-bold leading-[1.05] tracking-[-0.02em]">Dipak Sumesara</h1>
+        <p class="mb-5 text-[clamp(1.05rem,2vw,1.25rem)] font-medium text-[var(--text-dim)]">Senior Software Engineer — <strong class="font-semibold text-[var(--text)]">Full-Stack, Backend-Heavy</strong></p>
+        <p class="mb-[26px] max-w-[62ch] text-base text-[var(--text-dim)]">Backend-heavy full-stack engineer with 8+ years designing and shipping scalable systems end-to-end. Three years as architect and lead on a US enterprise SaaS platform, cutting API response times from seconds to milliseconds. Built the real-time backend for a fantasy-sports app at 100K+ concurrent users, and contributed to a Singapore government health platform run under a 90% test-coverage gate. Comfortable across the full stack and time zones; daily user of AI-assisted development tools, with hands-on experience building AI agents and LLM-integrated systems.</p>
+        <div class="mb-[34px] flex flex-wrap gap-3">
           <a class="btn btn-primary" href="./resume.pdf" download="Dipak-Sumesara-Resume.pdf">Download resume ↓</a>
           <a class="btn btn-ghost" href="mailto:dipakbsumesara@gmail.com">Email me</a>
           <a class="btn btn-ghost" href="https://github.com/dipak-sumesara" target="_blank" rel="noopener">GitHub</a>
           <a class="btn btn-ghost" href="https://linkedin.com/in/dipakbsumesara" target="_blank" rel="noopener">LinkedIn</a>
         </div>
-        <div class="stat-row">
-          <div class="stat"><span class="num">8+</span><span class="label">Years shipping production systems</span></div>
-          <div class="stat"><span class="num">100K+</span><span class="label">Concurrent users served live</span></div>
-          <div class="stat"><span class="num">sec→ms</span><span class="label">API latency cut at Aloha</span></div>
-          <div class="stat"><span class="num">90%</span><span class="label">Enforced test-coverage gate</span></div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-px overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--border)]">
+          <div class="bg-[var(--surface)] px-3.5 py-4">
+            <span class="block font-mono text-[1.4rem] font-semibold text-[var(--accent-strong)]">8+</span>
+            <span class="mt-1 block text-[0.78rem] text-[var(--text-dim)]">Years shipping production systems</span>
+          </div>
+          <div class="bg-[var(--surface)] px-3.5 py-4">
+            <span class="block font-mono text-[1.4rem] font-semibold text-[var(--accent-strong)]">100K+</span>
+            <span class="mt-1 block text-[0.78rem] text-[var(--text-dim)]">Concurrent users served live</span>
+          </div>
+          <div class="bg-[var(--surface)] px-3.5 py-4">
+            <span class="block font-mono text-[1.4rem] font-semibold text-[var(--accent-strong)]">sec→ms</span>
+            <span class="mt-1 block text-[0.78rem] text-[var(--text-dim)]">API latency cut at Aloha</span>
+          </div>
+          <div class="bg-[var(--surface)] px-3.5 py-4">
+            <span class="block font-mono text-[1.4rem] font-semibold text-[var(--accent-strong)]">90%</span>
+            <span class="mt-1 block text-[0.78rem] text-[var(--text-dim)]">Enforced test-coverage gate</span>
+          </div>
         </div>
       </div>
       <div class="terminal">
         <div class="terminal-bar">
-          <span class="t-dot1"></span><span class="t-dot2"></span><span class="t-dot3"></span>
-          <span class="terminal-title">zsh — status</span>
+          <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-[#FF5F57]"></span>
+          <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-[#FEBC2E]"></span>
+          <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-[#28C840]"></span>
+          <span class="ml-2 font-mono text-[0.72rem] text-[#7C8798]">zsh — status</span>
         </div>
-        <div class="terminal-body">
-          <div class="term-line"><span class="t-prompt">visitor@dipak</span><span class="t-key"> ~ %</span> status</div>
+        <div class="terminal-body max-[400px]:text-[0.76rem]">
+          <div class="whitespace-normal break-words"><span class="text-[#5EEAD4]">visitor@dipak</span><span class="text-[#7C8798]"> ~ %</span> status</div>
           <div class="term-row"><span class="term-label">role</span><span class="term-val">Senior Backend Engineer, Full-Stack</span></div>
           <div class="term-row"><span class="term-label">location</span><span class="term-val">Ahmedabad, IN · Remote (EST overlap)</span></div>
           <div class="term-row"><span class="term-label">stack</span><span class="term-val">Node.js · NestJS · React · TypeScript · AWS</span></div>
           <div class="term-row"><span class="term-label">years</span><span class="term-val">8+ across 5 teams</span></div>
-          <div class="term-row"><span class="term-label">latency</span><span class="term-val"><span class="t-hl">seconds → milliseconds</span> (Redis + indexing, Aloha)</span></div>
-          <div class="term-row"><span class="term-label">scale</span><span class="term-val"><span class="t-hl">100K+</span> concurrent users (11Wickets)</span></div>
-          <div class="term-row"><span class="term-label">coverage</span><span class="term-val"><span class="t-hl">90%</span> min. gate enforced (Healthy 365, SG Gov)</span></div>
+          <div class="term-row"><span class="term-label">latency</span><span class="term-val"><span class="text-[#F5A623]">seconds → milliseconds</span> (Redis + indexing, Aloha)</span></div>
+          <div class="term-row"><span class="term-label">scale</span><span class="term-val"><span class="text-[#F5A623]">100K+</span> concurrent users (11Wickets)</span></div>
+          <div class="term-row"><span class="term-label">coverage</span><span class="term-val"><span class="text-[#F5A623]">90%</span> min. gate enforced (Healthy 365, SG Gov)</span></div>
           <div class="term-row"><span class="term-label">search</span><span class="term-val">~20K products indexed, Elasticsearch (Aloha)</span></div>
-          <div class="term-line" style="margin-top:14px;"><span class="t-prompt">visitor@dipak</span><span class="t-key"> ~ %</span> <span class="cursor" aria-hidden="true"></span></div>
+          <div class="whitespace-normal break-words mt-3.5"><span class="text-[#5EEAD4]">visitor@dipak</span><span class="text-[#7C8798]"> ~ %</span> <span class="inline-block h-3.5 w-[7px] animate-blink-caret bg-[#5EEAD4] align-[-2px]" aria-hidden="true"></span></div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="projects" aria-labelledby="projects-heading">
-    <div class="wrap">
-      <div class="section-head">
+  <section id="projects" aria-labelledby="projects-heading" class="section-shell relative overflow-hidden border-t-[color-mix(in_srgb,var(--accent)_35%,var(--border))]">
+    <div class="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[color-mix(in_srgb,var(--accent)_20%,transparent)] blur-3xl animate-glow-pulse" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute -bottom-24 -left-16 h-64 w-64 rounded-full bg-[color-mix(in_srgb,var(--accent)_12%,transparent)] blur-3xl animate-glow-pulse [animation-delay:1.5s]" aria-hidden="true"></div>
+    <div class="wrap relative">
+      <div class="mb-4 h-[3px] w-[120px] rounded-full bg-[linear-gradient(90deg,var(--accent),var(--accent-strong),var(--accent))] bg-[length:200%_100%] animate-shimmer"></div>
+      <div class="section-head js-reveal">
         <h2 id="projects-heading">Projects</h2>
-        <span class="section-tag">Selected work</span>
+        <span class="status-pill border-[var(--accent)] text-[var(--accent-strong)]">
+          <span class="h-1.5 w-1.5 shrink-0 animate-status-ping rounded-full bg-[var(--accent)]" aria-hidden="true"></span>
+          Selected work
+        </span>
       </div>
-      <div class="project-grid" id="project-grid"></div>
+      <div class="js-reveal mb-8 flex flex-wrap gap-2" role="group" aria-label="Filter projects" id="project-filter">
+        <button type="button" class="filter-btn" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" class="filter-btn" data-filter="professional" aria-pressed="false">Professional</button>
+        <button type="button" class="filter-btn" data-filter="open-source" aria-pressed="false">Open Source</button>
+      </div>
+
+      <div data-group="professional">
+        <h3 class="js-reveal mb-4 font-mono text-xs uppercase tracking-[0.06em] text-[var(--text-dim)]">Professional Work</h3>
+        <div class="grid grid-cols-1 min-[700px]:grid-cols-2 gap-6" id="project-grid-professional"></div>
+      </div>
+
+      <div data-group="open-source" class="mt-10">
+        <h3 class="js-reveal mb-4 font-mono text-xs uppercase tracking-[0.06em] text-[var(--text-dim)]">Open Source &amp; Personal Projects</h3>
+        <div class="grid grid-cols-1 min-[700px]:grid-cols-2 gap-6" id="project-grid-open-source"></div>
+      </div>
     </div>
   </section>
 
-  <section id="experience" aria-labelledby="experience-heading">
+  <section id="experience" aria-labelledby="experience-heading" class="section-shell">
     <div class="wrap">
       <div class="section-head">
         <h2 id="experience-heading">Experience</h2>
         <span class="section-tag">2017 — 2026 · 5 companies</span>
       </div>
-      <div class="timeline">
+      <div class="flex flex-col">
 
-        <article class="job">
-          <div class="job-meta">
-            <span class="job-dates">MAR 2023 — APR 2026</span>
-            <span class="job-uptime">37mo</span>
+        <article class="job grid grid-cols-1 min-[700px]:grid-cols-[170px_1fr] gap-2.5 min-[700px]:gap-7 border-t border-[var(--border)] py-7 first:border-t-0 first:pt-0">
+          <div class="flex flex-col gap-2 pt-[3px]">
+            <span class="font-mono text-[0.78rem] tracking-[0.02em] text-[var(--text-dim)]">MAR 2023 — APR 2026</span>
+            <span class="w-fit rounded-md border border-[var(--border)] bg-[var(--accent-soft)] px-2 py-[3px] font-mono text-[0.72rem] text-[var(--accent-strong)]">3.1y</span>
           </div>
-          <div class="job-body">
-            <h3>Senior Backend Engineer / Platform Lead <span class="co">· SwagUp</span> <small>(via Extendime)</small></h3>
-            <p class="job-loc">Remote — US timezone collaboration (EST/CST)</p>
-
-            <div class="subproject">
-              <h4>Aloha <span class="tag">— Enterprise Admin &amp; Operations Platform</span></h4>
-              <ul>
-                <li>Architect and lead for a B2B enterprise operations platform (vendor, distributor, admin workflows) — owned system design, built the backend, led the team, and contributed to the React frontend alongside US product and engineering.</li>
-                <li>Cut API response times from seconds to milliseconds via Redis caching, query optimization, and database indexing.</li>
-                <li>Built backend microservices behind an API Gateway pattern with centralized authentication, authorization, and session management on AWS Lambda.</li>
-                <li>Implemented a reliable Node-to-Salesforce data sync using AWS SQS with a dead-letter queue (DLQ) for guaranteed delivery and error handling.</li>
-                <li>Designed fault-tolerant, event-driven flows with pub/sub and SQS queuing, backed by retry and observability patterns.</li>
-                <li>Built Elasticsearch-backed search for ~20K products with custom indexing pipelines, keeping the index reliably in sync with source data.</li>
-                <li>Containerized services with Docker, ran deployments through CI/CD, and served assets via S3 and CloudFront CDN.</li>
-                <li>Owned CI/CD pipelines, branching strategy, and release workflows, including off-hour production deploys under high-availability SLAs.</li>
-                <li>Established Jest test automation and code-review standards across the platform.</li>
-              </ul>
-            </div>
-
-            <div class="subproject">
-              <h4>SwagUp.com <span class="tag">— Customer-Facing Platform</span></h4>
-              <ul>
-                <li>Built REST and GraphQL APIs and the React frontend for order tracking and a multi-tier pricing engine with dynamic discount logic and real-time quote generation.</li>
-              </ul>
+          <div>
+            <h3 class="mb-[3px] text-[1.15rem] font-semibold">Senior Backend Engineer / Platform Lead <span class="text-[var(--accent-strong)]">· SwagUp</span> <small class="font-normal text-[0.85em] text-[var(--text-dim)]">(via Extendime)</small></h3>
+            <p class="mb-4 text-[0.85rem] text-[var(--text-dim)]">Remote — US timezone collaboration (EST/CST)</p>
+            <p class="mb-3 text-[0.93rem] text-[var(--text-dim)]">Architect and platform lead for Aloha, SwagUp's B2B enterprise operations platform, owning system design, the backend build, and the engineering team, while also contributing REST/GraphQL APIs and React frontend work on SwagUp.com.</p>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="font-mono text-[0.68rem] uppercase tracking-wide text-[var(--text-dim)]">Projects</span>
+              <a href="#project-aloha" class="chip transition-colors duration-150 ease-out hover:border-[var(--accent)] hover:text-[var(--accent-strong)]">Aloha →</a>
+              <a href="#project-swagup-com" class="chip transition-colors duration-150 ease-out hover:border-[var(--accent)] hover:text-[var(--accent-strong)]">SwagUp.com →</a>
             </div>
           </div>
         </article>
 
-        <article class="job">
-          <div class="job-meta">
-            <span class="job-dates">JUN 2021 — MAR 2023</span>
-            <span class="job-uptime">21mo</span>
+        <article class="job grid grid-cols-1 min-[700px]:grid-cols-[170px_1fr] gap-2.5 min-[700px]:gap-7 border-t border-[var(--border)] py-7 first:border-t-0 first:pt-0">
+          <div class="flex flex-col gap-2 pt-[3px]">
+            <span class="font-mono text-[0.78rem] tracking-[0.02em] text-[var(--text-dim)]">JUN 2021 — MAR 2023</span>
+            <span class="w-fit rounded-md border border-[var(--border)] bg-[var(--accent-soft)] px-2 py-[3px] font-mono text-[0.72rem] text-[var(--accent-strong)]">1.8y</span>
           </div>
-          <div class="job-body">
-            <h3>Software Engineer / Backend Lead <span class="co">· CoffeeBeans Consulting</span></h3>
-            <p class="job-loc">Remote</p>
-
-            <div class="subproject">
-              <h4>Health Promotion Board (Healthy 365) <span class="tag">— Singapore Government Health Platform</span></h4>
-              <ul>
-                <li>Built backend systems (Node.js) for a high-quality-bar citizen health application (React frontend), delivered by a 10-person cross-functional team under a rigorous engineering process.</li>
-                <li>Worked within a strict quality pipeline: mandatory kickoff calls with QA and design before development, pair programming, dual QA (pixel-level design QA against Figma, then functional QA), and staged Dev → QA → UAT → Production promotion.</li>
-                <li>Met enforced quality gates: 90% minimum unit-test coverage (commits blocked below threshold), strict ESLint rules, and standardized commit conventions — build/commit failed on any violation.</li>
-              </ul>
-            </div>
-
-            <div class="subproject">
-              <h4>Salam Kisan <span class="tag">— Agritech Platform</span></h4>
-              <ul>
-                <li>Owned backend architecture on Strapi CMS; built REST APIs and automated data-sync workflows for an agri supply-chain platform, including Open edX integration for learning content.</li>
-                <li>Led a 3-engineer backend team across sprint delivery, code quality, and production support.</li>
-              </ul>
+          <div>
+            <h3 class="mb-[3px] text-[1.15rem] font-semibold">Software Engineer / Backend Lead <span class="text-[var(--accent-strong)]">· CoffeeBeans Consulting</span></h3>
+            <p class="mb-4 text-[0.85rem] text-[var(--text-dim)]">Remote</p>
+            <p class="mb-3 text-[0.93rem] text-[var(--text-dim)]">Built backend systems for Healthy 365, a Singapore government citizen health platform run under a strict quality-gated engineering process, and led a 3-engineer backend team on Salam Kisan, an agritech supply-chain platform.</p>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="font-mono text-[0.68rem] uppercase tracking-wide text-[var(--text-dim)]">Projects</span>
+              <a href="#project-healthy-365" class="chip transition-colors duration-150 ease-out hover:border-[var(--accent)] hover:text-[var(--accent-strong)]">Healthy 365 →</a>
+              <a href="#project-salam-kisan" class="chip transition-colors duration-150 ease-out hover:border-[var(--accent)] hover:text-[var(--accent-strong)]">Salam Kisan →</a>
             </div>
           </div>
         </article>
 
-        <article class="job">
-          <div class="job-meta">
-            <span class="job-dates">MAY 2020 — MAY 2021</span>
-            <span class="job-uptime">12mo</span>
+        <article class="job grid grid-cols-1 min-[700px]:grid-cols-[170px_1fr] gap-2.5 min-[700px]:gap-7 border-t border-[var(--border)] py-7 first:border-t-0 first:pt-0">
+          <div class="flex flex-col gap-2 pt-[3px]">
+            <span class="font-mono text-[0.78rem] tracking-[0.02em] text-[var(--text-dim)]">MAY 2020 — MAY 2021</span>
+            <span class="w-fit rounded-md border border-[var(--border)] bg-[var(--accent-soft)] px-2 py-[3px] font-mono text-[0.72rem] text-[var(--accent-strong)]">1y</span>
           </div>
-          <div class="job-body">
-            <h3>Software Engineer <span class="co">· Yudiz Solutions</span></h3>
-            <p class="job-loc">Ahmedabad, India</p>
-
-            <div class="subproject">
-              <h4>11Wickets <span class="tag">— Fantasy Sports Platform (Dream11 competitor)</span></h4>
-              <ul>
-                <li>Built real-time backend features for a platform serving 100K+ concurrent users at peak match load: live score updates over WebSockets and Redis caching to sustain high-concurrency read traffic.</li>
-                <li>Implemented full-stack WebSocket-based live chat (frontend and backend) for real-time user engagement during matches.</li>
-                <li>Led a React UX overhaul: migrated to functional components with Hooks, added lazy loading, infinite scroll, and optimized state management.</li>
-                <li>Mentored junior developers.</li>
-              </ul>
+          <div>
+            <h3 class="mb-[3px] text-[1.15rem] font-semibold">Software Engineer <span class="text-[var(--accent-strong)]">· Yudiz Solutions</span></h3>
+            <p class="mb-4 text-[0.85rem] text-[var(--text-dim)]">Ahmedabad, India</p>
+            <p class="mb-3 text-[0.93rem] text-[var(--text-dim)]">Built real-time backend and led a React UX overhaul for 11Wickets, a fantasy-sports platform serving 100K+ concurrent users at peak match load, while mentoring junior developers.</p>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="font-mono text-[0.68rem] uppercase tracking-wide text-[var(--text-dim)]">Projects</span>
+              <a href="#project-11wickets" class="chip transition-colors duration-150 ease-out hover:border-[var(--accent)] hover:text-[var(--accent-strong)]">11Wickets →</a>
             </div>
           </div>
         </article>
 
-        <article class="job">
-          <div class="job-meta">
-            <span class="job-dates">JAN 2019 — MAR 2020</span>
-            <span class="job-uptime">14mo</span>
+        <article class="job grid grid-cols-1 min-[700px]:grid-cols-[170px_1fr] gap-2.5 min-[700px]:gap-7 border-t border-[var(--border)] py-7 first:border-t-0 first:pt-0">
+          <div class="flex flex-col gap-2 pt-[3px]">
+            <span class="font-mono text-[0.78rem] tracking-[0.02em] text-[var(--text-dim)]">JAN 2019 — MAR 2020</span>
+            <span class="w-fit rounded-md border border-[var(--border)] bg-[var(--accent-soft)] px-2 py-[3px] font-mono text-[0.72rem] text-[var(--accent-strong)]">1.2y</span>
           </div>
-          <div class="job-body">
-            <h3>Software Engineer <span class="co">· Biztech Consulting &amp; Solutions</span></h3>
-            <p class="job-loc">Ahmedabad, India</p>
-            <ul>
-              <li>Proposed and led a v2.0 overhaul, migrating from legacy Angular to a modern, modular architecture with clean design patterns and secure API integrations — adopted by the founding team.</li>
-              <li>Rebuilt the product from the ground up, splitting the feature set into modules to enable a tiered pricing model (Professional, Ultimate, Custom), replacing the previous all-or-nothing model and driving significant customer growth.</li>
-              <li>Built a Fabric.js product designer with live 2D preview and Three.js 3D preview for real-time customization.</li>
-            </ul>
+          <div>
+            <h3 class="mb-[3px] text-[1.15rem] font-semibold">Software Engineer <span class="text-[var(--accent-strong)]">· Biztech Consulting &amp; Solutions</span></h3>
+            <p class="mb-4 text-[0.85rem] text-[var(--text-dim)]">Ahmedabad, India</p>
+            <p class="mb-3 text-[0.93rem] text-[var(--text-dim)]">Proposed and led a v2.0 architecture overhaul and rebuilt the product's pricing model from the ground up, adopted by the founding team.</p>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="font-mono text-[0.68rem] uppercase tracking-wide text-[var(--text-dim)]">Projects</span>
+              <a href="#project-biztech-platform-overhaul" class="chip transition-colors duration-150 ease-out hover:border-[var(--accent)] hover:text-[var(--accent-strong)]">Product Platform Overhaul →</a>
+            </div>
           </div>
         </article>
 
-        <article class="job">
-          <div class="job-meta">
-            <span class="job-dates">DEC 2017 — SEP 2018</span>
-            <span class="job-uptime">9mo</span>
+        <article class="job grid grid-cols-1 min-[700px]:grid-cols-[170px_1fr] gap-2.5 min-[700px]:gap-7 border-t border-[var(--border)] py-7 first:border-t-0 first:pt-0">
+          <div class="flex flex-col gap-2 pt-[3px]">
+            <span class="font-mono text-[0.78rem] tracking-[0.02em] text-[var(--text-dim)]">DEC 2017 — SEP 2018</span>
+            <span class="w-fit rounded-md border border-[var(--border)] bg-[var(--accent-soft)] px-2 py-[3px] font-mono text-[0.72rem] text-[var(--accent-strong)]">0.8y</span>
           </div>
-          <div class="job-body">
-            <h3>Software Engineer, Intern → Full-Time <span class="co">· Angular Minds</span></h3>
-            <p class="job-loc">Pune (Baner), India</p>
-
-            <div class="subproject">
-              <h4>Numnu <span class="tag">— Food Event &amp; Fair Discovery App</span></h4>
-              <ul>
-                <li>Built a food-event and fair discovery app (Angular, Ionic) surfacing local food events and trending dishes by proximity and date range.</li>
-                <li>Delivered an interactive event-guide mode used at large events (e.g. Royal Manitoba Winter Fair) for schedules, maps, vendor discovery, guest reviews, and a photo-rich review pipeline with pricing and timelines.</li>
-              </ul>
+          <div>
+            <h3 class="mb-[3px] text-[1.15rem] font-semibold">Software Engineer, Intern → Full-Time <span class="text-[var(--accent-strong)]">· Angular Minds</span></h3>
+            <p class="mb-4 text-[0.85rem] text-[var(--text-dim)]">Pune (Baner), India</p>
+            <p class="mb-3 text-[0.93rem] text-[var(--text-dim)]">Built Numnu, a food-event and fair discovery app, including an interactive event-guide mode used at large public events.</p>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="font-mono text-[0.68rem] uppercase tracking-wide text-[var(--text-dim)]">Projects</span>
+              <a href="#project-numnu" class="chip transition-colors duration-150 ease-out hover:border-[var(--accent)] hover:text-[var(--accent-strong)]">Numnu →</a>
             </div>
           </div>
         </article>
@@ -479,58 +220,64 @@
     </div>
   </section>
 
-  <section id="stack" aria-labelledby="stack-heading">
+  <section id="stack" aria-labelledby="stack-heading" class="section-shell">
     <div class="wrap">
       <div class="section-head">
         <h2 id="stack-heading">Stack</h2>
         <span class="section-tag">By layer</span>
       </div>
-      <div class="stack-grid">
+      <div class="grid grid-cols-1 min-[480px]:grid-cols-2 min-[880px]:grid-cols-4 gap-3.5">
         <div class="stack-card">
-          <h4>Backend</h4>
-          <div class="chips">
+          <h4 class="mb-3 font-mono text-[0.78rem] uppercase tracking-[0.05em] text-[var(--accent-strong)]">Backend</h4>
+          <div class="flex flex-wrap gap-1.5">
             <span class="chip">Node.js</span><span class="chip">NestJS</span><span class="chip">TypeScript</span><span class="chip">GraphQL</span><span class="chip">REST APIs</span>
           </div>
         </div>
         <div class="stack-card">
-          <h4>Frontend</h4>
-          <div class="chips">
-            <span class="chip">React (Vite)</span><span class="chip">Redux Toolkit</span><span class="chip">Context API</span><span class="chip">Hooks</span><span class="chip">Tailwind CSS</span><span class="chip">Material UI</span><span class="chip">Ant Design</span><span class="chip">Angular</span><span class="chip">Ionic</span>
+          <h4 class="mb-3 font-mono text-[0.78rem] uppercase tracking-[0.05em] text-[var(--accent-strong)]">Frontend</h4>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="chip">React (Vite)</span><span class="chip">Redux Toolkit</span><span class="chip">Context API</span><span class="chip">Hooks</span><span class="chip">Performance Optimization</span><span class="chip">Tailwind CSS</span><span class="chip">Material UI</span><span class="chip">Ant Design</span><span class="chip">Angular</span><span class="chip">Ionic</span>
           </div>
         </div>
         <div class="stack-card">
-          <h4>Architecture</h4>
-          <div class="chips">
-            <span class="chip">System Design</span><span class="chip">Microservices</span><span class="chip">Event-Driven</span><span class="chip">API Gateway</span><span class="chip">Pub/Sub</span><span class="chip">SQS / DLQ</span><span class="chip">WebSockets</span><span class="chip">High-Concurrency</span><span class="chip">Fault-Tolerant Design</span>
+          <h4 class="mb-3 font-mono text-[0.78rem] uppercase tracking-[0.05em] text-[var(--accent-strong)]">Architecture</h4>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="chip">System Design</span><span class="chip">Microservices</span><span class="chip">Event-Driven</span><span class="chip">API Gateway</span><span class="chip">Pub/Sub</span><span class="chip">SQS / DLQ</span><span class="chip">Caching Strategies</span><span class="chip">WebSockets</span><span class="chip">High-Concurrency</span><span class="chip">Fault-Tolerant Design</span>
           </div>
         </div>
         <div class="stack-card">
-          <h4>Data &amp; Caching</h4>
-          <div class="chips">
+          <h4 class="mb-3 font-mono text-[0.78rem] uppercase tracking-[0.05em] text-[var(--accent-strong)]">Data &amp; Caching</h4>
+          <div class="flex flex-wrap gap-1.5">
             <span class="chip">MongoDB</span><span class="chip">PostgreSQL</span><span class="chip">MySQL</span><span class="chip">Redis</span><span class="chip">Elasticsearch</span>
           </div>
         </div>
         <div class="stack-card">
-          <h4>Cloud &amp; DevOps</h4>
-          <div class="chips">
+          <h4 class="mb-3 font-mono text-[0.78rem] uppercase tracking-[0.05em] text-[var(--accent-strong)]">Cloud &amp; DevOps</h4>
+          <div class="flex flex-wrap gap-1.5">
             <span class="chip">AWS Lambda</span><span class="chip">API Gateway</span><span class="chip">SQS</span><span class="chip">S3</span><span class="chip">CloudFront</span><span class="chip">Docker</span><span class="chip">CI/CD</span>
           </div>
         </div>
         <div class="stack-card">
-          <h4>Security</h4>
-          <div class="chips">
+          <h4 class="mb-3 font-mono text-[0.78rem] uppercase tracking-[0.05em] text-[var(--accent-strong)]">Security</h4>
+          <div class="flex flex-wrap gap-1.5">
             <span class="chip">AuthN / AuthZ</span><span class="chip">Session Management</span><span class="chip">Secure API Design</span><span class="chip">Centralized Auth</span>
           </div>
         </div>
         <div class="stack-card">
-          <h4>Observability &amp; Testing</h4>
-          <div class="chips">
+          <h4 class="mb-3 font-mono text-[0.78rem] uppercase tracking-[0.05em] text-[var(--accent-strong)]">Observability &amp; Testing</h4>
+          <div class="flex flex-wrap gap-1.5">
             <span class="chip">Logging</span><span class="chip">Monitoring</span><span class="chip">Error Handling</span><span class="chip">Perf Profiling</span><span class="chip">Jest</span><span class="chip">Coverage Gates</span>
           </div>
         </div>
         <div class="stack-card">
-          <h4>AI Dev Tools</h4>
-          <div class="chips">
+          <h4 class="mb-3 font-mono text-[0.78rem] uppercase tracking-[0.05em] text-[var(--accent-strong)]">AI Engineering</h4>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="chip">Anthropic Claude API</span><span class="chip">AI Agent Development</span><span class="chip">Tool / Function Calling</span><span class="chip">Multi-Step Orchestration</span><span class="chip">RAG</span><span class="chip">Prompt Engineering</span><span class="chip">Context Management</span><span class="chip">Structured Output Validation</span><span class="chip">Streaming Responses</span>
+          </div>
+        </div>
+        <div class="stack-card">
+          <h4 class="mb-3 font-mono text-[0.78rem] uppercase tracking-[0.05em] text-[var(--accent-strong)]">AI Dev Tools</h4>
+          <div class="flex flex-wrap gap-1.5">
             <span class="chip">GitHub Copilot</span><span class="chip">Cursor</span><span class="chip">Claude Code</span><span class="chip">OpenAI Codex</span>
           </div>
         </div>
@@ -538,22 +285,22 @@
     </div>
   </section>
 
-  <section id="education" aria-labelledby="education-heading">
+  <section id="education" aria-labelledby="education-heading" class="section-shell">
     <div class="wrap">
       <div class="section-head">
         <h2 id="education-heading">Education</h2>
       </div>
       <div class="edu-card">
         <div>
-          <h3>Master of Computer Applications (MCA)</h3>
-          <p>Pune University</p>
+          <h3 class="mb-1 text-[1.05rem]">Master of Computer Applications (MCA)</h3>
+          <p class="m-0 text-[0.9rem] text-[var(--text-dim)]">Pune University</p>
         </div>
-        <span class="edu-year">2018</span>
+        <span class="font-mono text-[0.9rem] text-[var(--accent-strong)]">2018</span>
       </div>
     </div>
   </section>
 
-  <section id="contact" aria-labelledby="contact-heading">
+  <section id="contact" aria-labelledby="contact-heading" class="section-shell">
     <div class="wrap">
       <div class="section-head">
         <h2 id="contact-heading">Contact</h2>
@@ -561,20 +308,22 @@
       </div>
       <div class="terminal">
         <div class="terminal-bar">
-          <span class="t-dot1"></span><span class="t-dot2"></span><span class="t-dot3"></span>
-          <span class="terminal-title">zsh — contact</span>
+          <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-[#FF5F57]"></span>
+          <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-[#FEBC2E]"></span>
+          <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-[#28C840]"></span>
+          <span class="ml-2 font-mono text-[0.72rem] text-[#7C8798]">zsh — contact</span>
         </div>
-        <div class="terminal-body">
-          <div class="term-line"><span class="t-prompt">visitor@dipak</span><span class="t-key"> ~ %</span> contact --dipak</div>
+        <div class="terminal-body max-[400px]:text-[0.76rem]">
+          <div class="whitespace-normal break-words"><span class="text-[#5EEAD4]">visitor@dipak</span><span class="text-[#7C8798]"> ~ %</span> contact --dipak</div>
           <div class="term-row"><span class="term-label">email</span><span class="term-val">dipakbsumesara@gmail.com</span></div>
           <div class="term-row"><span class="term-label">phone</span><span class="term-val">+91 96621 84977</span></div>
           <div class="term-row"><span class="term-label">github</span><span class="term-val">github.com/dipak-sumesara</span></div>
           <div class="term-row"><span class="term-label">linkedin</span><span class="term-val">linkedin.com/in/dipakbsumesara</span></div>
           <div class="term-row"><span class="term-label">location</span><span class="term-val">Ahmedabad, India — remote, open to relocation</span></div>
-          <div class="term-line" style="margin-top:14px;"><span class="t-prompt">visitor@dipak</span><span class="t-key"> ~ %</span> <span class="cursor" aria-hidden="true"></span></div>
+          <div class="whitespace-normal break-words mt-3.5"><span class="text-[#5EEAD4]">visitor@dipak</span><span class="text-[#7C8798]"> ~ %</span> <span class="inline-block h-3.5 w-[7px] animate-blink-caret bg-[#5EEAD4] align-[-2px]" aria-hidden="true"></span></div>
         </div>
       </div>
-      <div class="contact-links">
+      <div class="mt-6 flex flex-wrap gap-3">
         <a class="btn btn-primary" href="./resume.pdf" download="Dipak-Sumesara-Resume.pdf">Download resume ↓</a>
         <a class="btn btn-ghost" href="mailto:dipakbsumesara@gmail.com">Email me</a>
         <a class="btn btn-ghost" href="tel:+919662184977">Call</a>
@@ -585,114 +334,354 @@
   </section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <p>© 2026 Dipak Sumesara</p>
-    <p>Built with Node.js habits, shipped as a static page</p>
+<footer class="border-t border-[var(--border)] py-[26px]">
+  <div class="wrap flex flex-wrap items-center justify-between gap-2.5">
+    <p class="m-0 font-mono text-[0.82rem] text-[var(--text-dim)]">© 2026 Dipak Sumesara</p>
+    <p class="m-0 font-mono text-[0.82rem] text-[var(--text-dim)]">Built with Node.js habits, styled with Tailwind CSS</p>
   </div>
 </footer>
 
 <script>
   /* ===================================================================
      EDIT PROJECTS HERE — add, remove, or fill in placeholder fields.
-     Each project renders as a card in the #project-grid container below.
-     status: 'live' | 'in-progress' | 'planned'
-     repo / demo: full URL, or a placeholder string starting with "ADD "
-                  (placeholders render as a pending pill instead of a link)
+
+     Shape:
+       { id, type: 'professional' | 'open-source', title, company?, role?,
+         period?, tagline, description, stack: string[], highlights?,
+         repo?, demo?, featured? }
+
+     - type 'professional': proprietary company work. No repo/demo link is
+       rendered even if present in the data — a "Private / proprietary"
+       indicator shows instead. company + period render as a meta line.
+     - type 'open-source': repo is required for a working GitHub link.
+       repo/demo may be a placeholder string starting with "ADD " to render
+       a pending pill instead of a link; demo is left null unless a live,
+       working deploy exists.
+     - featured is reserved for future curation; not currently used by the
+       renderer (all cards render at the same size).
+     - stack is capped at 6 tags per card at render time.
      =================================================================== */
   const PROJECTS = [
+    // ---- Professional Work (from resume.pdf, most recent first) ----
     {
-      title: "High-Performance API Engine",
-      tagline: "Distributed rate limiter, proven under real load.",
-      status: "live",
-      problem: "Multiple API instances enforcing one shared rate limit is a classic race-condition trap — naive counters let clients slip through under concurrency.",
-      architecture: "Fastify service backed by Redis, using an atomic Lua script for the token-bucket check-and-decrement so limit checks stay race-free across horizontally scaled instances. Ships with Prometheus metrics and graceful shutdown handling.",
-      result: "~470 req/s sustained, p95 latency under 10ms on the fast path, zero race conditions observed under 50 concurrent virtual users (k6 load test, documented in the repo).",
-      tags: ["Fastify", "Redis", "Lua", "Prometheus", "Docker", "k6"],
-      repo: "https://github.com/dipak-sumesara/high-performance-api-engine",
+      id: "aloha",
+      type: "professional",
+      title: "Aloha — Enterprise Admin & Operations Platform",
+      company: "SwagUp (via Extendime)",
+      role: "Senior Backend Engineer / Platform Lead",
+      period: "Mar 2023 – Apr 2026",
+      tagline: "Architected and led the backend for a B2B enterprise operations platform spanning vendor, distributor, and admin workflows.",
+      description: "As architect and platform lead, owned system design and the backend build, led the engineering team, and contributed to the React frontend alongside SwagUp's US product and engineering teams. Backend microservices sit behind an API Gateway pattern with centralized auth and session management on AWS Lambda, and a Node-to-Salesforce sync runs on AWS SQS with a dead-letter queue for guaranteed delivery.",
+      stack: ["Node.js", "TypeScript", "React", "AWS Lambda", "Redis", "Elasticsearch"],
+      highlights: [
+        "Cut API response times from seconds to milliseconds via Redis caching, query optimization, and indexing",
+        "Elasticsearch-backed search across ~20K products with custom indexing pipelines kept in sync with source data",
+        "Reliable Node-to-Salesforce sync on AWS SQS with a dead-letter queue for guaranteed delivery",
+        "Owns CI/CD, branching strategy, and release workflows, including off-hour production deploys under high-availability SLAs"
+      ]
+    },
+    {
+      id: "swagup-com",
+      type: "professional",
+      title: "SwagUp.com — Customer-Facing Platform",
+      company: "SwagUp (via Extendime)",
+      role: "Senior Backend Engineer / Platform Lead",
+      period: "Mar 2023 – Apr 2026",
+      tagline: "Customer-facing order tracking and pricing experience alongside the Aloha backend work.",
+      description: "Built REST and GraphQL APIs plus the React frontend for order tracking and a multi-tier pricing engine, with dynamic discount logic and real-time quote generation.",
+      stack: ["Node.js", "GraphQL", "REST APIs", "React", "TypeScript"],
+      highlights: [
+        "Multi-tier pricing engine with dynamic discount logic and real-time quote generation"
+      ]
+    },
+    {
+      id: "healthy-365",
+      type: "professional",
+      title: "Health Promotion Board (Healthy 365) — Singapore Government Health Platform",
+      company: "CoffeeBeans Consulting",
+      role: "Software Engineer / Backend Lead",
+      period: "Jun 2021 – Mar 2023",
+      tagline: "Backend for a citizen health app built under Singapore government engineering standards.",
+      description: "Built Node.js backend systems for a high-quality-bar citizen health application with a React frontend, delivered by a 10-person cross-functional team under a rigorous engineering process — mandatory QA/design kickoff calls, pair programming, dual QA against Figma, then functional QA, and staged Dev → QA → UAT → Production promotion.",
+      stack: ["Node.js", "React", "Jest", "ESLint"],
+      highlights: [
+        "90% minimum unit-test coverage enforced — commits blocked below threshold",
+        "Strict ESLint rules and standardized commit conventions enforced at build/commit time",
+        "Dual QA pipeline: pixel-level design QA against Figma, then functional QA"
+      ]
+    },
+    {
+      id: "salam-kisan",
+      type: "professional",
+      title: "Salam Kisan — Agritech Platform",
+      company: "CoffeeBeans Consulting",
+      role: "Software Engineer / Backend Lead",
+      period: "Jun 2021 – Mar 2023",
+      tagline: "Backend architecture and team lead for an agri supply-chain platform.",
+      description: "Owned backend architecture on Strapi CMS, building REST APIs and automated data-sync workflows for an agri-supply-chain platform, including Open edX integration for learning content, while leading a 3-engineer backend team across sprint delivery, code quality, and production support.",
+      stack: ["Strapi CMS", "REST APIs", "Open edX"],
+      highlights: [
+        "Automated data-sync workflows across the agri supply chain",
+        "Open edX integration for learning content",
+        "Led a 3-engineer backend team across sprint delivery and production support"
+      ]
+    },
+    {
+      id: "11wickets",
+      type: "professional",
+      title: "11Wickets — Fantasy Sports Platform (Dream11 competitor)",
+      company: "Yudiz Solutions",
+      role: "Software Engineer",
+      period: "May 2020 – May 2021",
+      tagline: "Real-time backend for a fantasy-sports platform serving 100K+ concurrent users at peak.",
+      description: "Built real-time backend features — live score updates over WebSockets and Redis caching — to sustain high-concurrency read traffic at peak match load, plus a full-stack WebSocket-based live chat for real-time engagement during matches. Also led a React UX overhaul, migrating to functional components with Hooks and adding lazy loading and infinite scroll.",
+      stack: ["Node.js", "WebSockets", "Redis", "React", "Hooks"],
+      highlights: [
+        "100K+ concurrent users supported at peak match load",
+        "Full-stack WebSocket-based live chat for real-time engagement",
+        "React UX overhaul to functional components with Hooks, lazy loading, and infinite scroll",
+        "Mentored junior developers"
+      ]
+    },
+    {
+      id: "biztech-platform-overhaul",
+      type: "professional",
+      title: "Product Platform Overhaul",
+      company: "Biztech Consulting & Solutions",
+      role: "Software Engineer",
+      period: "Jan 2019 – Mar 2020",
+      tagline: "Led a v2.0 product overhaul, from legacy Angular to a modular architecture with a new tiered pricing model.",
+      description: "Proposed and led a v2.0 overhaul, migrating from legacy Angular to a modern, modular architecture with clean design patterns and secure API integrations — adopted by the founding team. Rebuilt the product from the ground up, splitting the feature set into modules to enable a tiered pricing model (Professional, Ultimate, and Custom — pick-your-own feature set), replacing the previous all-or-nothing model. Also built a Fabric.js product designer with a live 2D preview and a Three.js 3D preview for real-time customization.",
+      stack: ["Angular", "Fabric.js", "Three.js"],
+      highlights: [
+        "v2.0 architecture overhaul adopted by the founding team",
+        "Tiered pricing model (Professional, Ultimate, Custom) replaced the previous all-or-nothing model",
+        "Fabric.js 2D + Three.js 3D live product customization preview"
+      ]
+    },
+    {
+      id: "numnu",
+      type: "professional",
+      title: "Numnu — Food Event & Fair Discovery App",
+      company: "Angular Minds",
+      role: "Software Engineer (Intern → Full-Time)",
+      period: "Dec 2017 – Sep 2018",
+      tagline: "Food-event and fair discovery app surfacing local events and trending dishes by proximity and date.",
+      description: "Built a food-event and fair discovery app in Angular and Ionic that surfaces local food events and trending dishes by proximity and date range, plus an interactive event-guide mode used at large public events (e.g. Royal Manitoba Winter Fair) for schedules, maps, vendor discovery, and guest reviews, with a photo-rich review pipeline covering pricing and timelines.",
+      stack: ["Angular", "Ionic"],
+      highlights: [
+        "Interactive event-guide mode used at large public events (e.g. Royal Manitoba Winter Fair)",
+        "Photo-rich review pipeline with pricing and timelines"
+      ]
+    },
+
+    // ---- Open Source & Personal Projects ----
+    {
+      id: "ai-integration-discovery-agent",
+      type: "open-source",
+      title: "AI Integration Discovery Agent",
+      tagline: "An autonomous agent that reads API docs, probes a live API, and emits a validated connector spec.",
+      description: "A backend agent that automates the discovery phase of integrating a third-party SaaS API. It decides for itself what documentation to read and which endpoints to probe, reconciles the docs against real API behavior (the sample docs are deliberately wrong in places), and finalizes by calling a submit tool whose payload is validated against a Zod schema — so the output is machine-consumable by construction, not by hoping the model formats JSON correctly. Built on a small provider interface, so the same loop runs against local Ollama models or Anthropic Claude via a one-line env change. Tool surface is deliberately narrow: GET-only, localhost-only HTTP and a path-traversal-safe file reader. Hard iteration cap, retry-on-schema-failure, and unit tests that drive the loop with a mocked provider.",
+      stack: ["TypeScript", "Node.js", "LLM Tool Calling", "Zod", "Ollama", "Anthropic API"],
+      highlights: [
+        "Multi-step agent loop — the model chooses tools and order; Node only executes",
+        "Provider-agnostic: swap Ollama ↔ Claude with one env var, zero code change",
+        "Structured output enforced via tool call + Zod validation with self-correction",
+        "SSRF-safe and path-traversal-safe tool boundaries"
+      ],
+      repo: "https://github.com/dipak-sumesara/ai-integration-discovery-agent",
       demo: null
     },
     {
-      title: "Event Sync Platform",
-      tagline: "Reliable webhook delivery to unreliable external systems.",
-      status: "live",
-      problem: "Integrating with external platforms (Salesforce, ERPs, payment gateways) means living with network failures, partial downtime, and duplicate deliveries — most integrations don't handle any of it correctly.",
-      architecture: "An Order Service emits domain events, an Event Processor attempts webhook delivery, failures queue in Redis, a retry worker applies exponential backoff, and repeated failures fall through to dead-letter handling. Redis also backs idempotent duplicate detection so retried events never apply twice.",
-      result: "Idempotent processing and exponential-backoff retry validated end-to-end across three services against a simulated unreliable external system.",
-      tags: ["Node.js", "NestJS", "Redis", "Event-driven", "Idempotency", "DLQ"],
-      repo: "https://github.com/dipak-sumesara/event-sync-platform",
+      id: "ai-commerce-assistant",
+      type: "open-source",
+      title: "AI Commerce Assistant",
+      tagline: "RAG-backed commerce assistant where the LLM interprets and the backend decides.",
+      description: "A full-stack GenAI assistant for a B2B merchandise platform, built on the principle that the LLM handles language understanding while TypeScript handles business execution. Markdown knowledge docs are chunked, embedded through Ollama, and retrieved by in-memory cosine similarity; natural-language product searches are converted into a Zod-validated intent object, after which deterministic code applies hard filters and soft preference ranking. Out-of-domain requests are refused before retrieval or generation runs, and retrieved documents are treated as untrusted data that cannot override the system prompt. React UI surfaces both the AI's interpretation and the results.",
+      stack: ["TypeScript", "Fastify", "React", "RAG", "Ollama", "Zod"],
+      highlights: [
+        "LLM never queries the database, filters products, or executes code",
+        "Domain guardrail short-circuits out-of-scope input before RAG",
+        "Prompt-injection-aware: retrieved context is untrusted by design",
+        "Tests mock the Ollama layer — suite runs with no model required"
+      ],
+      repo: "https://github.com/dipak-sumesara/ai-commerce-assistant",
       demo: null
     },
     {
+      id: "llm-inference-orchestrator",
+      type: "open-source",
       title: "LLM Inference Orchestrator",
-      tagline: "Production-style infrastructure for resilient LLM job processing.",
-      status: "in-progress",
-      problem: "LLM APIs are slow, flaky, and expensive to call synchronously at scale — most demos just wrap a single blocking call and stop there.",
-      architecture: "An API service accepts jobs and returns immediately, pushing work onto a Redis-backed queue. A separate worker service processes jobs with exponential-backoff retry, dead-letters after max attempts, and honors client-supplied idempotency keys so retried requests never duplicate work.",
-      result: "Async ingestion, retry/DLQ, and idempotency are implemented and running. Multi-provider routing, semantic caching, and load-test benchmarks are the next milestone — noted openly as in progress rather than claimed as done.",
-      tags: ["Node.js", "Redis", "Queue/Worker", "Idempotency"],
+      tagline: "Async job infrastructure for LLM calls — queue, retries, dead-letters, idempotency.",
+      description: "Production-style backend modeling how LLM inference should be run at scale: a stateless API service accepts jobs and returns immediately, a separate worker process consumes them from a Redis-backed queue, failures retry with exponential backoff, and jobs that exhaust their budget are dead-lettered rather than looping forever. Clients can pass an idempotency key so a timeout-and-retry never creates duplicate work. Deliberate failure simulation exercises the resilience paths.",
+      stack: ["TypeScript", "Node.js", "Redis", "Distributed Queues", "Idempotency", "Workers"],
+      highlights: [
+        "API and worker run as separate processes — workers scale horizontally",
+        "Exponential backoff with an enforced max-retry threshold and dead-letter state",
+        "x-idempotency-key returns the original job instead of duplicating it",
+        "Atomic job state transitions in Redis"
+      ],
       repo: "https://github.com/dipak-sumesara/llm-inference-orchestrator",
       demo: null
     },
     {
-      title: "AI Integration Discovery Agent",
-      tagline: "An LLM agent that discovers how to integrate a third-party API on its own.",
-      status: "live",
-      problem: "Integrating a third-party SaaS API starts with a slow, manual discovery phase — reading docs, identifying auth requirements, locating endpoints, and validating assumptions against the real service — before any connector code gets written.",
-      architecture: "A Node.js agent runs a manual tool-use loop against a provider-agnostic LLMProvider interface (local Ollama by default, Anthropic Claude via a one-line env change), giving the model a sandboxed docs-reader tool and a GET-only, localhost-only HTTP tool to investigate a mock identity-platform API. A hard iteration cap and a Zod-validated submit_discovery_result tool call enforce a structured final output.",
-      result: "The multi-step discovery loop (read docs → validate against the live API → submit) is verified deterministically with a mocked LLMProvider in the test suite. Testing also surfaced and documented an honest limitation: smaller local models sometimes skip real validation calls and fabricate plausible-looking results, while the harness and schema stay correct regardless of model quality.",
-      tags: ["Node.js", "TypeScript", "LLM Agents", "Tool Calling", "Zod", "Ollama", "Anthropic"],
-      repo: "https://github.com/dipak-sumesara/ai-integration-discovery-agent",
+      id: "high-performance-api-engine",
+      type: "open-source",
+      title: "High Performance API Engine",
+      tagline: "Distributed token-bucket rate limiting with atomic Redis Lua, instrumented and load-tested.",
+      description: "A stateless Fastify service that enforces per-client rate limits across horizontally scaled instances by keeping bucket state in Redis and doing the check-and-decrement inside a single atomic Lua script, which removes the read-modify-write race that naive rate limiters have under concurrency. Prometheus metrics expose request counts, rate-limited counts, and a latency histogram; SIGTERM/SIGINT are handled for graceful shutdown; the whole thing runs under Docker Compose and is load-tested with k6.",
+      stack: ["TypeScript", "Fastify", "Redis", "Lua", "Prometheus", "k6"],
+      highlights: [
+        "Atomic Lua execution — no race conditions observed under concurrent load",
+        "Local k6 benchmark: ~470 req/s at 50 VUs, p95 under 10ms on the fast path",
+        "Prometheus latency histogram and rate-limit counters, Grafana-ready",
+        "Stateless: shared Redis state lets instances enforce limits consistently"
+      ],
+      repo: "https://github.com/dipak-sumesara/high-performance-api-engine",
+      demo: null
+    },
+    {
+      id: "event-sync-platform",
+      type: "open-source",
+      title: "Event Sync Platform",
+      tagline: "Webhook-driven event sync that stays correct when the other system goes down.",
+      description: "A multi-service platform simulating the failure modes of integrating with external platforms — network failures, partial downtime, duplicate deliveries. An order service emits domain events, an event processor attempts webhook delivery against a deliberately unreliable mock system, and failures enter a Redis retry queue with exponential backoff and a dead-letter threshold. Redis-backed duplicate detection makes event handling idempotent, so at-least-once delivery doesn't produce duplicate side effects.",
+      stack: ["TypeScript", "Node.js", "Redis", "Webhooks", "Event-Driven", "Microservices"],
+      highlights: [
+        "Idempotent processing with Redis-based duplicate detection",
+        "Exponential backoff (2^n) plus dead-letter threshold",
+        "Multi-service layout: order service, event processor, mock external system",
+        "Models eventual consistency between systems, not just API wiring"
+      ],
+      repo: "https://github.com/dipak-sumesara/event-sync-platform",
+      demo: null
+    },
+    {
+      id: "nlq-commerce-engine",
+      type: "open-source",
+      title: "NLQ Commerce Engine",
+      tagline: "Natural-language product search with explainable, deterministic ranking.",
+      description: "A Fastify API that turns conversational shopping intent (\"budget 50000, gaming laptop from Asus\") into a strict JSON filter schema via OpenAI, validates and sanitizes it with Zod, then filters and ranks entirely in deterministic TypeScript. Every result carries a ranking breakdown — keyword match count, normalized rating score, budget-proximity score, and the weighted total — so a result can always be explained rather than attributed to a model. Structured JSON logging, request timing hooks, a rule-based parser mode that runs with no API key, Docker Compose, and unit plus integration tests.",
+      stack: ["TypeScript", "Fastify", "OpenAI", "Zod", "Docker", "Vitest"],
+      highlights: [
+        "Strict JSON schema + Zod validation with budget/brand normalization and repair",
+        "Explainable ranking: every score component returned with the result",
+        "rule-based parser mode runs the full pipeline with zero API cost",
+        "Integration test for /search, unit test for the filtering engine"
+      ],
+      repo: "https://github.com/dipak-sumesara/NLQ-Commerce-Engine",
+      demo: null
+    },
+    {
+      id: "ai-chatbot",
+      type: "open-source",
+      title: "AI Character Chat",
+      tagline: "Persona-driven conversational app running entirely on a local model.",
+      description: "A full-stack character chat application with a persona engine that composes a character's personality, background, speech style, and emotional boundaries into a tightly constrained prompt, then runs it against a locally hosted Ollama model with tuned sampling parameters — no cloud API and no data leaving the machine. Conversations and messages persist in MongoDB with a sliding recent-context window; the React 19 client handles state with Zustand and animation with Framer Motion.",
+      stack: ["React 19", "TypeScript", "Express", "MongoDB", "Zustand", "Ollama"],
+      highlights: [
+        "Modular backend: character, conversation, message, and AI modules",
+        "Sliding context window keeps prompts bounded as conversations grow",
+        "Runs fully offline against a local model"
+      ],
+      repo: "https://github.com/dipak-sumesara/AI-Chatbot",
       demo: null
     }
   ];
 
   (function renderProjects(){
-    const STATUS_LABEL = { "live": "Live", "in-progress": "In Progress", "planned": "Planned" };
     const isPlaceholder = v => typeof v === "string" && v.trim().toUpperCase().startsWith("ADD ");
-    const grid = document.getElementById("project-grid");
-    const frag = document.createDocumentFragment();
+    const grids = {
+      "professional": document.getElementById("project-grid-professional"),
+      "open-source": document.getElementById("project-grid-open-source")
+    };
+    const frags = {
+      "professional": document.createDocumentFragment(),
+      "open-source": document.createDocumentFragment()
+    };
 
-    PROJECTS.forEach(p => {
-      const card = document.createElement("article");
-      card.className = "project-card";
-
-      const chips = p.tags.map(t => `<span class="chip">${t}</span>`).join("");
-      const resultClass = isPlaceholder(p.result) ? "project-result todo" : "project-result";
-
-      card.innerHTML = `
-        <div class="project-head">
-          <h3>${p.title}</h3>
-          <span class="status-tag status-${p.status}">${STATUS_LABEL[p.status]}</span>
-        </div>
-        <p class="project-tagline">${p.tagline}</p>
-        <div class="project-block"><span class="project-label">Problem</span><p>${p.problem}</p></div>
-        <div class="project-block"><span class="project-label">Architecture</span><p>${p.architecture}</p></div>
-        <div class="${resultClass}">${p.result}</div>
-        <div class="chips">${chips}</div>
-        <div class="project-links"></div>
-      `;
-
+    const renderLinks = (card, p) => {
       const linksEl = card.querySelector(".project-links");
+      if (p.type === "professional") {
+        linksEl.insertAdjacentHTML("beforeend", `<span class="status-pill">Private / proprietary — company work</span>`);
+        return;
+      }
       if (p.repo) {
         if (isPlaceholder(p.repo)) {
-          linksEl.insertAdjacentHTML("beforeend", `<span class="chip todo">${p.repo}</span>`);
+          linksEl.insertAdjacentHTML("beforeend", `<span class="chip chip-todo">${p.repo}</span>`);
         } else {
-          linksEl.insertAdjacentHTML("beforeend", `<a class="btn btn-ghost small" href="${p.repo}" target="_blank" rel="noopener">GitHub →</a>`);
+          linksEl.insertAdjacentHTML("beforeend", `<a class="btn btn-ghost btn-sm" href="${p.repo}" target="_blank" rel="noopener">GitHub →</a>`);
         }
       }
       if (p.demo) {
         if (isPlaceholder(p.demo)) {
-          linksEl.insertAdjacentHTML("beforeend", `<span class="chip todo">${p.demo}</span>`);
+          linksEl.insertAdjacentHTML("beforeend", `<span class="chip chip-todo">${p.demo}</span>`);
         } else {
-          linksEl.insertAdjacentHTML("beforeend", `<a class="btn btn-ghost small" href="${p.demo}" target="_blank" rel="noopener">Live demo →</a>`);
+          linksEl.insertAdjacentHTML("beforeend", `<a class="btn btn-ghost btn-sm" href="${p.demo}" target="_blank" rel="noopener">Live demo →</a>`);
         }
       }
+    };
 
-      frag.appendChild(card);
+    PROJECTS.forEach((p) => {
+      const isPro = p.type === "professional";
+      const chips = p.stack.slice(0, 6).map(t => `<span class="chip">${t}</span>`).join("");
+      const highlightsHtml = p.highlights
+        ? `<ul class="project-highlights">${p.highlights.map(h => `<li>${h}</li>`).join("")}</ul>`
+        : "";
+      const typeBadge = isPro
+        ? `<span class="status-tag status-featured">Professional</span>`
+        : `<span class="status-tag status-client">Open Source</span>`;
+      const metaLine = (p.company || p.period)
+        ? `<p class="m-0 font-mono text-[0.76rem] text-[var(--text-dim)]">${[p.company, p.period].filter(Boolean).join(" · ")}</p>`
+        : "";
+
+      const card = document.createElement("article");
+      card.className = "project-card scroll-mt-24";
+      card.id = `project-${p.id}`;
+      card.dataset.id = p.id;
+      card.dataset.type = p.type;
+      card.innerHTML = `
+        <div class="flex items-start justify-between gap-3">
+          <h3 class="text-[1.08rem] leading-[1.3]">${p.title}</h3>
+          ${typeBadge}
+        </div>
+        ${metaLine}
+        <p class="m-0 text-[0.92rem] text-[var(--text-dim)]">${p.tagline}</p>
+        <p class="m-0 text-[0.88rem] leading-[1.5] text-[var(--text)]">${p.description}</p>
+        ${highlightsHtml}
+        <div class="flex flex-wrap gap-1.5">${chips}</div>
+        <div class="project-links mt-auto flex flex-wrap items-center gap-2 pt-1"></div>
+      `;
+      renderLinks(card, p);
+      frags[p.type].appendChild(card);
     });
 
-    grid.appendChild(frag);
+    grids["professional"].appendChild(frags["professional"]);
+    grids["open-source"].appendChild(frags["open-source"]);
+  })();
+
+  (function projectFilter(){
+    const group = document.getElementById("project-filter");
+    if (!group) return;
+    const buttons = Array.from(group.querySelectorAll(".filter-btn"));
+    const sections = {
+      "professional": document.querySelector('[data-group="professional"]'),
+      "open-source": document.querySelector('[data-group="open-source"]')
+    };
+
+    const applyFilter = (filter) => {
+      Object.entries(sections).forEach(([key, el]) => {
+        if (!el) return;
+        el.hidden = !(filter === "all" || filter === key);
+      });
+    };
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        buttons.forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+        applyFilter(btn.dataset.filter);
+      });
+    });
   })();
 
   (function smoothScrollNav(){
@@ -700,9 +689,45 @@
       a.addEventListener('click', function(e){
         var id = a.getAttribute('href').slice(1);
         var el = document.getElementById(id);
-        if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+        if (!el) return;
+        e.preventDefault();
+        // if the target project card is inside a group hidden by the
+        // Projects filter, switch back to "All" so it's visible first,
+        // then wait a frame for layout to settle before measuring the
+        // scroll target (unhiding doesn't reflow synchronously)
+        var hiddenGroup = el.closest('[data-group][hidden]');
+        if (hiddenGroup) {
+          var allBtn = document.querySelector('.filter-btn[data-filter="all"]');
+          if (allBtn) allBtn.click();
+          requestAnimationFrame(function(){
+            requestAnimationFrame(function(){
+              el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+          });
+        } else {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       });
     });
+  })();
+
+  (function scrollReveal(){
+    if (!('IntersectionObserver' in window)) return;
+    const targets = document.querySelectorAll('.project-card, .job, .stack-card, .edu-card, .js-reveal');
+    targets.forEach((el, i) => {
+      el.classList.add('opacity-0', 'translate-y-4');
+      el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+      el.style.transitionDelay = ((i % 6) * 70) + 'ms';
+    });
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove('opacity-0', 'translate-y-4');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    targets.forEach(el => io.observe(el));
   })();
 </script>
 </body>
