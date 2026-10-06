@@ -1,14 +1,27 @@
 {
   "name": "portfolio-website",
   "private": true,
-  "version": "1.0.0",
-  "description": "Dipak Sumesara's portfolio site, styled with Tailwind CSS.",
+  "version": "2.0.0",
+  "description": "Dipak Sumesara's portfolio — Next.js (App Router), Tailwind CSS, Framer Motion.",
   "scripts": {
-    "build:css": "tailwindcss -i ./src/input.css -o ./dist/styles.css --minify",
-    "watch:css": "tailwindcss -i ./src/input.css -o ./dist/styles.css --watch"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "npx serve out",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "framer-motion": "13.5.1",
+    "lucide-react": "^1.52.0",
+    "next": "^16.4.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
   },
   "devDependencies": {
-    "@tailwindcss/cli": "^4.3.3",
-    "tailwindcss": "^4.3.3"
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^26.6.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2"
   }
 }

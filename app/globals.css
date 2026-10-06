@@ -1,0 +1,161 @@
+@import "tailwindcss";
+
+/* Dark mode is class-driven (set before paint by the script in app/layout.tsx). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------- Design tokens ---------- */
+:root {
+  --bg: #f6f5f1;
+  --bg-elevated: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #efede7;
+  --border: rgb(17 17 17 / 0.09);
+  --border-strong: rgb(17 17 17 / 0.18);
+  --fg: #111111;
+  --fg-muted: #5c5b57;
+  --fg-subtle: #8b8a85;
+  --accent: #d9461c;
+  --accent-fg: #ffffff;
+  --accent-soft: rgb(217 70 28 / 0.09);
+  --grid-line: rgb(17 17 17 / 0.05);
+  --glow: rgb(217 70 28 / 0.14);
+  --shadow: 0 1px 0 rgb(17 17 17 / 0.04), 0 12px 32px -16px rgb(17 17 17 / 0.18);
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #08080a;
+  --bg-elevated: #0e0e11;
+  --surface: #111114;
+  --surface-2: #17171b;
+  --border: rgb(255 255 255 / 0.08);
+  --border-strong: rgb(255 255 255 / 0.16);
+  --fg: #f2f1ee;
+  --fg-muted: #a1a09b;
+  --fg-subtle: #6d6c68;
+  --accent: #ff6b3d;
+  --accent-fg: #0b0b0d;
+  --accent-soft: rgb(255 107 61 / 0.1);
+  --grid-line: rgb(255 255 255 / 0.035);
+  --glow: rgb(255 107 61 / 0.16);
+  --shadow: 0 1px 0 rgb(255 255 255 / 0.03), 0 20px 40px -24px rgb(0 0 0 / 0.8);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-fg: var(--fg);
+  --color-muted: var(--fg-muted);
+  --color-subtle: var(--fg-subtle);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-soft: var(--accent-soft);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-display: var(--font-instrument-serif), ui-serif, Georgia, serif;
+
+  --shadow-card: var(--shadow);
+}
+
+/* ---------- Base ---------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-fg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+}
+
+/* ---------- Components ---------- */
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-[1200px] px-5 sm:px-8;
+  }
+
+  .eyebrow {
+    @apply font-mono text-[0.7rem] font-medium uppercase tracking-[0.18em] text-muted;
+  }
+
+  .card {
+    @apply rounded-3xl border border-line bg-surface shadow-card;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-line bg-bg px-3 py-1 text-[0.78rem] text-muted transition-colors duration-300;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-primary {
+    @apply bg-fg text-bg hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-10px_var(--glow)];
+  }
+
+  .btn-ghost {
+    @apply border border-line-strong text-fg hover:border-fg hover:bg-surface;
+  }
+}
+
+/* ---------- Atmosphere ---------- */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 100%);
+}
+
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
