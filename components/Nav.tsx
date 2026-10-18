@@ -88,7 +88,7 @@ export function Nav() {
               className="hidden items-center gap-1.5 rounded-full border border-line px-3.5 py-1.5 text-[0.8rem] text-muted transition-colors hover:border-line-strong hover:text-fg sm:inline-flex"
             >
               <ArrowDownToLine size={14} strokeWidth={1.75} />
-              Résumé
+              Resume
             </a>
             <ThemeToggle />
             <button
@@ -142,7 +142,7 @@ export function Nav() {
               ))}
               <li className="pt-8">
                 <a href={profile.resume} download="Dipak-Sumesara-Resume.pdf" className="btn btn-primary w-full">
-                  <ArrowDownToLine size={16} /> Download résumé
+                  <ArrowDownToLine size={16} /> Download Resume
                 </a>
               </li>
             </ul>

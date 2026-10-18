@@ -18,7 +18,7 @@ components/
 lib/content.ts        every word on the site — edit this, not the components
 public/
   avatar.jpg          profile photo (hero portrait, favicon, OG image)
-  resume.pdf          linked from every "Résumé" button
+  resume.pdf          linked from every "Resume" button
 ```
 
 ## Running locally
@@ -32,7 +32,7 @@ npm start           # serve out/ to preview the production build
 
 ## Updating content
 
-- **Résumé changes** — replace `public/resume.pdf`, then mirror the changes in `lib/content.ts` (experience, metrics, case studies, skills). Components render whatever is there.
+- **Resume changes** — replace `public/resume.pdf`, then mirror the changes in `lib/content.ts` (experience, metrics, case studies, skills). Components render whatever is there.
 - **Avatar** — replace `public/avatar.jpg`. A larger, roughly 4:5 photo (≥ 800px tall) will look sharper in the hero portrait than the current 256×256 image.
 - **Colors / fonts** — tokens at the top of `app/globals.css`; fonts are loaded in `app/layout.tsx`.
 
