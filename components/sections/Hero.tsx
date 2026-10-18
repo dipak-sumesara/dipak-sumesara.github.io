@@ -73,10 +73,10 @@ export function Hero() {
 
           <motion.div variants={rise} className="mt-10 flex flex-wrap items-center gap-3">
             <a href="#work" className="btn btn-primary">
-              View case studies <ArrowDownRight size={16} />
+              See my work <ArrowDownRight size={16} />
             </a>
             <a href="#contact" className="btn btn-ghost">
-              Start a conversation <ArrowUpRight size={16} />
+              Get in touch <ArrowUpRight size={16} />
             </a>
           </motion.div>
         </div>
@@ -127,14 +127,14 @@ export function Hero() {
 /** A visual shorthand for the headline claim: the same request, before and after. */
 function LatencyStrip() {
   return (
-    <div className="px-2 pt-4 pb-2" role="img" aria-label="API response times reduced from seconds to milliseconds">
+    <div className="px-2 pt-4 pb-2" role="img" aria-label="API response times reduced from about 4 seconds to 300 to 500 milliseconds">
       <div className="mb-2 flex items-center justify-between">
         <span className="eyebrow">API response time</span>
-        <span className="font-mono text-[0.7rem] text-accent">s → ms</span>
+        <span className="font-mono text-[0.7rem] text-accent">~4 s → 300–500 ms</span>
       </div>
       <div className="space-y-1.5">
         <div className="flex items-center gap-3">
-          <span className="w-10 font-mono text-[0.65rem] text-subtle">before</span>
+          <span className="w-20 shrink-0 font-mono text-[0.65rem] text-subtle">~4 s</span>
           <div className="h-1.5 flex-1 rounded-full bg-surface-2">
             <motion.div
               initial={{ width: "0%" }}
@@ -145,11 +145,11 @@ function LatencyStrip() {
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <span className="w-10 font-mono text-[0.65rem] text-subtle">after</span>
+          <span className="w-20 shrink-0 font-mono text-[0.65rem] text-subtle">300–500 ms</span>
           <div className="h-1.5 flex-1 rounded-full bg-surface-2">
             <motion.div
               initial={{ width: "0%" }}
-              animate={{ width: "4%" }}
+              animate={{ width: "10%" }}
               transition={{ duration: 0.5, ease, delay: 2.1 }}
               className="h-full rounded-full bg-accent"
             />

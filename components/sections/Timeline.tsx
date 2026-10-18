@@ -39,13 +39,13 @@ export function Timeline() {
       <div className="container-x">
         <SectionHeading
           index="03"
-          eyebrow="Career trajectory"
+          eyebrow="Experience"
           title={
             <>
-              From first commit to <em className="text-accent">leading the backend.</em>
+              Eight years, <em className="text-accent">five companies.</em>
             </>
           }
-          lede="Eight-plus years moving up the stack of responsibility — from shipping features, to owning backend architecture, to leading the engineers who build on it."
+          lede="From an internship building features, to owning backend architecture and leading small teams."
         />
 
         {/* Trajectory bar: segment width is proportional to tenure */}

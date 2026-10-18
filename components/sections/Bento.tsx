@@ -18,13 +18,13 @@ export function Bento() {
       <div className="container-x">
         <SectionHeading
           index="01"
-          eyebrow="Impact at a glance"
+          eyebrow="Highlights"
           title={
             <>
-              Systems measured in <em className="text-accent">outcomes</em>, not lines of code.
+              Selected <em className="text-accent">numbers</em> from my work.
             </>
           }
-          lede="The numbers below come from production — enterprise SaaS, government health tech, and live sports traffic."
+          lede="All figures are from my résumé. Each one says which project it comes from and what my part was."
         />
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12">
@@ -33,7 +33,7 @@ export function Bento() {
             <div className="flex h-full flex-col justify-between gap-10">
               <div>
                 <span className="eyebrow">{headline.label}</span>
-                <p className="mt-4 font-display text-[clamp(4rem,9vw,7rem)] leading-none tracking-[-0.04em]">
+                <p className="mt-4 font-display text-[clamp(2.75rem,6vw,4.5rem)] leading-none tracking-[-0.04em]">
                   {headline.value.split("→")[0]}
                   <span className="text-subtle">→</span>
                   <span className="italic text-accent">{headline.value.split("→")[1]}</span>
@@ -56,7 +56,7 @@ export function Bento() {
             </BentoCard>
           ))}
 
-          {/* Core competencies */}
+          {/* Core skills */}
           <BentoCard className="sm:col-span-2 lg:col-span-7">
             <div className="mb-6 flex items-center justify-between">
               <span className="eyebrow">Core competencies</span>
@@ -82,7 +82,7 @@ export function Bento() {
           <BentoCard className="sm:col-span-2 lg:col-span-5" delay={0.08}>
             <div className="flex h-full flex-col justify-between gap-6">
               <div className="flex items-center justify-between">
-                <span className="eyebrow">Leadership philosophy</span>
+                <span className="eyebrow">Working with teams</span>
                 <Users size={18} strokeWidth={1.5} className="text-subtle" />
               </div>
               <div>
@@ -131,14 +131,13 @@ export function Bento() {
               <div className="lg:col-span-4">
                 <div className="mb-4 flex items-center gap-2">
                   <Sparkles size={16} className="text-accent" />
-                  <span className="eyebrow">Now building · AI engineering</span>
+                  <span className="eyebrow">Side projects · AI</span>
                 </div>
                 <h3 className="font-display text-3xl leading-tight">
-                  LLM systems with the same rigor as the backend underneath them.
+                  Small projects exploring LLM tool calling and RAG.
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted">
-                  RAG, agentic workflows, guardrails, and structured output — written in Node.js and TypeScript,
-                  tested like production code.
+                  Proofs of concept in Node.js and TypeScript with schema-validated output and mocked tests. At SwagUp I also built a production LLM tool-calling agent for box recommendations.
                 </p>
               </div>
               <ul className="grid gap-3 md:grid-cols-3 lg:col-span-8">
@@ -201,7 +200,7 @@ function RequestPath() {
         ))}
       </div>
       <p className="mt-3 font-mono text-[0.65rem] text-subtle">
-        hot reads served from cache · indexed queries · read/write split
+        simplified: cached reads skip the database; price and stock are never cached
       </p>
     </div>
   );

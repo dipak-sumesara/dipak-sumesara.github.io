@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowDownToLine, ArrowUpRight, Check, Copy, Mail, Phone } from "lucide-react";
+import { ArrowDownToLine, ArrowUpRight, Check, Copy, Mail } from "lucide-react";
 import { profile } from "@/lib/content";
 import { GitHubIcon, LinkedInIcon } from "@/components/ui/BrandIcons";
 import { Reveal } from "@/components/ui/Reveal";
@@ -28,10 +28,10 @@ export function Contact() {
           eyebrow="Contact"
           title={
             <>
-              Have a system that needs to be <em className="text-accent">faster, safer, or both?</em>
+              Interested in <em className="text-accent">talking?</em>
             </>
           }
-          lede="I'm open to senior backend roles. Tell me about the system and the problem you're solving."
+          lede="I'm open to senior backend roles. Email is the quickest way to reach me."
         />
 
         <div className="grid gap-4 lg:grid-cols-12">
@@ -53,9 +53,6 @@ export function Contact() {
                 {copied ? <Check size={15} className="text-accent" /> : <Copy size={15} />}
                 {copied ? "Copied" : "Copy address"}
               </button>
-              <a href={profile.phoneHref} className="btn btn-ghost">
-                <Phone size={15} /> {profile.phone}
-              </a>
             </div>
           </Reveal>
 
@@ -76,7 +73,7 @@ export function Contact() {
               className="card group flex items-center justify-between p-6 transition-colors hover:border-accent"
             >
               <div>
-                <span className="eyebrow">Résumé</span>
+                <span className="eyebrow">Resume</span>
                 <p className="mt-2 font-medium">Download the full PDF</p>
               </div>
               <span className="grid h-10 w-10 place-items-center rounded-full bg-fg text-bg transition-transform group-hover:translate-y-0.5">
