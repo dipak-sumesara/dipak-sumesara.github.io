@@ -15,7 +15,7 @@ const display = Instrument_Serif({
 
 const title = `${profile.name} — ${profile.role}`;
 const description =
-  "Backend engineer (Node.js, TypeScript, AWS). Owned the backend of a multi-tenant B2B marketplace and cut API latency from ~4s to 300–500ms. Built real-time features for a fantasy sports platform with 100K+ concurrent users at peak.";
+  "Backend engineer (Node.js, TypeScript, AWS). Led backend development of a multi-tenant B2B marketplace, cut API latency from ~4s to 300–500ms, and built event-driven AWS integrations. Earlier built real-time features for a fantasy sports platform with 3M+ registered users.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(profile.site),

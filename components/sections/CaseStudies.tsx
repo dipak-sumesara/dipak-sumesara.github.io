@@ -129,7 +129,7 @@ function PartLabel({ icon, label }: { icon: React.ReactNode; label: string }) {
   );
 }
 
-/** Product-update event flow for Aloha. Colors come from theme tokens, so it follows light/dark mode. */
+/** Product-update event flow for SwagUp. Colors come from theme tokens, so it follows light/dark mode. */
 function ProductUpdateDiagram() {
   const box = { fill: "var(--surface)", stroke: "var(--border-strong)", strokeWidth: 1 } as const;
   const label = { fill: "var(--fg)", fontSize: 12, textAnchor: "middle" as const, dominantBaseline: "central" as const };
